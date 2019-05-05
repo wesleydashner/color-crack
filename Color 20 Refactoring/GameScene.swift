@@ -21,8 +21,18 @@ class Board {
             for columnIndex in 0...(x - 1) {
                 let sprite = SKSpriteNode()
                 sprite.size = CGSize(width: widthOfTile, height: widthOfTile)
-                sprite.position.x = CGFloat(-widthOfTile * Double(x / 2 - (columnIndex + 1)) - widthOfTile / 2 + Double(centerX))
-                sprite.position.y = CGFloat(-widthOfTile * Double(y / 2 - (rowIndex + 1)) - widthOfTile / 2 + Double(centerY))
+                if x % 2 == 0 {
+                    sprite.position.x = CGFloat(-widthOfTile * Double(x / 2 - (columnIndex + 1)) - widthOfTile / 2 + Double(centerX))
+                }
+                else {
+                    sprite.position.x = CGFloat(-widthOfTile * Double(x / 2 - (columnIndex + 1)) - widthOfTile + Double(centerX))
+                }
+                if y % 2 == 0 {
+                    sprite.position.y = CGFloat(-widthOfTile * Double(y / 2 - (rowIndex + 1)) - widthOfTile / 2 + Double(centerY))
+                }
+                else {
+                    sprite.position.y = CGFloat(-widthOfTile * Double(y / 2 - (rowIndex + 1)) - widthOfTile + Double(centerY))
+                }
                 let colors: Array<UIColor> = [.red, .orange, .yellow, .green, .blue, .purple]
                 sprite.color = colors.randomElement()!
                 tiles[rowIndex].append(sprite)
@@ -35,7 +45,7 @@ class Board {
 class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
-        let board = Board(x: 10, y: 10, widthOfBoard: Int(self.frame.width), gameScene: self)
+        let board = Board(x: 5, y: 5, widthOfBoard: Int(self.frame.width), gameScene: self)
     }
     
 }
