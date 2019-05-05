@@ -17,7 +17,7 @@ struct Tile {
 class Board {
     var tiles: Array<Array<Tile>>
     
-    init(x: Int, y: Int, widthOfBoard: Int, gameScene: SKScene, centerX: Int = 0, centerY: Int = 0) {
+    init(x: Int, y: Int) {
         tiles = []
         for _ in 1...y {
             tiles.append([])
@@ -27,8 +27,7 @@ class Board {
                 tiles[rowIndex].append(Tile(sprite: SKSpriteNode(), captured: false))
             }
         }
-        randomizeBoard()
-        loadBoard(widthOfBoard: widthOfBoard, gameScene: gameScene, centerX: centerX, centerY: centerY)
+        self.randomizeBoard()
     }
     
     func randomizeBoard() {
@@ -41,7 +40,7 @@ class Board {
         }
     }
     
-    func loadBoard(widthOfBoard: Int, gameScene: SKScene, centerX: Int, centerY: Int) {
+    func loadBoard(gameScene: SKScene, widthOfBoard: Int, centerX: Int = 0, centerY: Int = 0) {
         let x = tiles[0].count
         let y = tiles.count
         let widthOfTile = Double(widthOfBoard / x)

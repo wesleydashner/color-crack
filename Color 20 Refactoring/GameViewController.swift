@@ -20,7 +20,8 @@ class GameViewController: UIViewController {
         scene.scaleMode = .aspectFit
         view?.presentScene(scene)
         view?.ignoresSiblingOrder = true
-        let board = Board(x: 10, y: 10, widthOfBoard: Int(scene.frame.width), gameScene: scene)
+        let board = Board(x: 10, y: 10)
+        board.loadBoard(gameScene: scene, widthOfBoard: Int(scene.frame.width))
     }
 
     override var prefersStatusBarHidden: Bool {
