@@ -28,10 +28,10 @@ class Board {
                     sprite.position.x = CGFloat(-widthOfTile * Double(x / 2 - (columnIndex + 1)) - widthOfTile + Double(centerX))
                 }
                 if y % 2 == 0 {
-                    sprite.position.y = CGFloat(-widthOfTile * Double(y / 2 - (rowIndex + 1)) - widthOfTile / 2 + Double(centerY))
+                    sprite.position.y = CGFloat(widthOfTile * Double(y / 2 - (rowIndex + 1)) + widthOfTile / 2 + Double(centerY))
                 }
                 else {
-                    sprite.position.y = CGFloat(-widthOfTile * Double(y / 2 - (rowIndex + 1)) - widthOfTile + Double(centerY))
+                    sprite.position.y = CGFloat(widthOfTile * Double(y / 2 - (rowIndex + 1)) + widthOfTile + Double(centerY))
                 }
                 let colors: Array<UIColor> = [.red, .orange, .yellow, .green, .blue, .purple]
                 sprite.color = colors.randomElement()!
