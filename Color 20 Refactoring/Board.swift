@@ -28,6 +28,7 @@ class Board {
             }
         }
         self.randomizeBoard()
+        tiles[0][0].captured = true
     }
     
     func randomizeBoard() {
@@ -38,6 +39,10 @@ class Board {
                 row[columnIndex].sprite.color = colors.randomElement()!
             }
         }
+        
+        let goodColors: Array<UIColor> = colors.filter { $0 != tiles[0][0].sprite.color }
+        tiles[0][1].sprite.color = goodColors.randomElement()!
+        tiles[1][0].sprite.color = goodColors.randomElement()!
     }
     
     func loadBoard(gameScene: SKScene, widthOfBoard: Int, centerX: Int = 0, centerY: Int = 0) {
@@ -66,6 +71,37 @@ class Board {
     }
     
     func doColor(color: UIColor) {
+        for y in 1...(tiles.count - 1) {
+            for x in 1...(tiles[y].count - 1) {
+                captureTiles(color: color, x: x, y: y)
+            }
+        }
         
+        for y in 1...(tiles.count - 1) {
+            for x in 1...(tiles[y].count - 1) {
+                if tiles[y][x].captured == true {
+                    tiles[y][x].sprite.color = color
+                }
+            }
+        }
+    }
+    
+    func captureTiles(color: UIColor, x: Int, y: Int) {
+        if y != 0 && tiles[y - 1][x].sprite.color == color && tiles[y - 1][x].captured == false {
+            tiles[y - 1][x].captured = true
+            captureTiles(color: color, x: x, y: y - 1)
+        }
+        if y != tiles.count - 1 && tiles[y + 1][x].sprite.color == color && tiles[y + 1][x].captured == false {
+            tiles[y + 1][x].captured = true
+            captureTiles(color: color, x: x, y: y + 1)
+        }
+        if x != 0 && tiles[y][x - 1].sprite.color == color && tiles[y][x - 1].captured == false {
+            tiles[y][x - 1].captured = true
+            captureTiles(color: color, x: x - 1, y: y)
+        }
+        if x != tiles[0].count - 1 && tiles[y][x + 1].sprite.color == color && tiles[y][x + 1].captured == false {
+            tiles[y][x + 1].captured = true
+            captureTiles(color: color, x: x + 1, y: y)
+        }
     }
 }
