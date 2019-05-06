@@ -81,9 +81,7 @@ class Board {
         
         for y in 0...(tiles.count - 1) {
             for x in 0...(tiles[y].count - 1) {
-//                print("x: \(x), y: \(y)")
                 if tiles[y][x].captured == true {
-//                    print("it is captured")
                     tiles[y][x].sprite.color = color
                 }
             }
@@ -91,26 +89,21 @@ class Board {
     }
     
     func captureTiles(color: UIColor, x: Int, y: Int) {
-        print("captureTiles beginning with x: \(x), y: \(y)")
         if y != 0 && tiles[y - 1][x].sprite.color == color && tiles[y - 1][x].captured == false {
             tiles[y - 1][x].captured = true
-            print("tile x: \(x), y: \(y - 1) set to captured")
             captureTiles(color: color, x: x, y: y - 1)
         }
         if y != tiles.count - 1 && tiles[y + 1][x].sprite.color == color && tiles[y + 1][x].captured == false {
             tiles[y + 1][x].captured = true
             captureTiles(color: color, x: x, y: y + 1)
-            print("tile x: \(x), y: \(y + 1) set to captured")
         }
         if x != 0 && tiles[y][x - 1].sprite.color == color && tiles[y][x - 1].captured == false {
             tiles[y][x - 1].captured = true
             captureTiles(color: color, x: x - 1, y: y)
-            print("tile x: \(x - 1), y: \(y) set to captured")
         }
         if x != tiles[0].count - 1 && tiles[y][x + 1].sprite.color == color && tiles[y][x + 1].captured == false {
             tiles[y][x + 1].captured = true
             captureTiles(color: color, x: x + 1, y: y)
-            print("tile x: \(x + 1), y: \(y) set to captured")
         }
     }
 }
