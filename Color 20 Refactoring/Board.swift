@@ -9,11 +9,6 @@
 import Foundation
 import SpriteKit
 
-struct Tile {
-    var sprite: SKSpriteNode
-    var captured: Bool
-}
-
 class Board {
     var tiles: Array<Array<Tile>>
     
@@ -70,6 +65,7 @@ class Board {
         }
     }
     
+    // TODO: Create array of tiles that have already been called to captureTiles and make them not do it again
     func doColor(color: UIColor) {
         for y in 0...(tiles.count - 1) {
             for x in 0...(tiles[y].count - 1) {
