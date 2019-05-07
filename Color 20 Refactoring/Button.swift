@@ -16,10 +16,16 @@ class Button {
         sprite.color = color
     }
     
-    func loadButton(scene: SKScene) {
+    func loadButton(scene: SKScene, positionIndex: Int) {
         let buttonWidth = scene.frame.width / (6 + 7/6)
         sprite.size = CGSize(width: buttonWidth, height: buttonWidth * 2)
-        sprite.position = CGPoint(x: -(buttonWidth * 2.5 + (buttonWidth / 6) * 2.5), y: (-scene.frame.height + scene.frame.width) / 4 - scene.frame.width / 2)
+        for i in 0...5 {
+            if positionIndex == i {
+                sprite.position.x = CGFloat((7/6) * (-2.5 + Double(i)))
+                sprite.position.x *= CGFloat(buttonWidth)
+                sprite.position.y = CGFloat((-scene.frame.height + scene.frame.width) / 4 - scene.frame.width / 2)
+            }
+        }
         scene.addChild(sprite)
     }
     

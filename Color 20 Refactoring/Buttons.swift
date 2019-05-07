@@ -10,17 +10,29 @@ import Foundation
 import SpriteKit
 
 class Buttons {
-    var sprites: Array<Button> = []
+    var buttons: Array<Button> = []
     
     init(colors: Array<UIColor>) {
         for color in colors {
-            sprites.append(Button(color: color))
+            buttons.append(Button(color: color))
         }
     }
     
     func loadButtons(scene: SKScene) {
-        for sprite in sprites {
-            sprite.loadButton(scene: scene)
+        var index = 0
+        for button in buttons {
+            button.loadButton(scene: scene, positionIndex: index)
+            index += 1
         }
+    }
+    
+    func getButton(ofColor: UIColor) -> Button {
+        for button in buttons {
+            if button.sprite.color == ofColor {
+                return button
+            }
+        }
+        print("ERROR: returning black button because button of given color was not found")
+        return Button(color: .black)
     }
 }
