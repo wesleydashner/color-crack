@@ -66,7 +66,6 @@ class Board {
     }
     
     func doColor(color: UIColor) {
-        print()
         tilesCalledThisTurn = []
         for y in 0...(tiles.count - 1) {
             for x in 0...(tiles[y].count - 1) {
@@ -102,6 +101,26 @@ class Board {
         if x != tiles[0].count - 1 && tiles[y][x + 1].sprite.color == color && tiles[y][x + 1].captured == false {
             tiles[y][x + 1].captured = true
             captureTiles(color: color, x: x + 1, y: y)
+        }
+    }
+    
+    func isFilled() -> Bool {
+        let colorToTest = tiles[0][0].sprite.color
+        for y in 0...(tiles.count - 1) {
+            for x in 0...(tiles[y].count - 1) {
+                if tiles[y][x].sprite.color != colorToTest {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+    
+    func disconnect() {
+        for y in 0...(tiles.count - 1) {
+            for x in 0...(tiles[y].count - 1) {
+                tiles[y][x].sprite.removeFromParent()
+            }
         }
     }
 }

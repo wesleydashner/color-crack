@@ -26,9 +26,9 @@ class Buttons {
         }
     }
     
-    func getButton(ofColor: UIColor) -> Button {
+    func getButton(ofColor color: UIColor) -> Button {
         for button in buttons {
-            if button.sprite.color == ofColor {
+            if button.sprite.color == color {
                 return button
             }
         }
