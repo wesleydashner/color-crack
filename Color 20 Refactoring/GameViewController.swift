@@ -10,7 +10,7 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
-let board = Board(x: 2, y: 2)
+let board = Board(x: 12, y: 12)
 
 class GameViewController: UIViewController {
     
@@ -33,39 +33,34 @@ class GameViewController: UIViewController {
         view?.ignoresSiblingOrder = true
         board.loadBoard(gameScene: scene, widthOfBoard: Int(scene.frame.width))
         
-        redButton.size = CGSize(width: 50, height: 50)
-        redButton.position = CGPoint(x: -100, y: -scene.frame.height / 2 + redButton.frame.height / 2)
-        redButton.position.y += 150
+        let buttonWidth = scene.frame.width / (6 + 7/6)
+        redButton.size = CGSize(width: buttonWidth, height: buttonWidth * 2)
+        redButton.position = CGPoint(x: -(buttonWidth * 2.5 + (buttonWidth / 6) * 2.5), y: (-scene.frame.height + scene.frame.width) / 4 - scene.frame.width / 2)
         redButton.color = .red
         scene.addChild(redButton)
         
-        orangeButton.size = CGSize(width: 50, height: 50)
-        orangeButton.position = CGPoint(x: 0, y: -scene.frame.height / 2 + redButton.frame.height / 2)
-        orangeButton.position.y += 150
+        orangeButton.size = CGSize(width: buttonWidth, height: buttonWidth * 2)
+        orangeButton.position = CGPoint(x: -(buttonWidth * 1.5 + (buttonWidth / 6) * 1.5), y: (-scene.frame.height + scene.frame.width) / 4 - scene.frame.width / 2)
         orangeButton.color = .orange
         scene.addChild(orangeButton)
         
-        yellowButton.size = CGSize(width: 50, height: 50)
-        yellowButton.position = CGPoint(x: 100, y: -scene.frame.height / 2 + redButton.frame.height / 2)
-        yellowButton.position.y += 150
+        yellowButton.size = CGSize(width: buttonWidth, height: buttonWidth * 2)
+        yellowButton.position = CGPoint(x: -(buttonWidth * 0.5 + (buttonWidth / 6) * 0.5), y: (-scene.frame.height + scene.frame.width) / 4 - scene.frame.width / 2)
         yellowButton.color = .yellow
         scene.addChild(yellowButton)
         
-        greenButton.size = CGSize(width: 50, height: 50)
-        greenButton.position = CGPoint(x: -100, y: -scene.frame.height / 2 + redButton.frame.height / 2)
-        greenButton.position.y += 50
+        greenButton.size = CGSize(width: buttonWidth, height: buttonWidth * 2)
+        greenButton.position = CGPoint(x: buttonWidth * 0.5 + (buttonWidth / 6) * 0.5, y: (-scene.frame.height + scene.frame.width) / 4 - scene.frame.width / 2)
         greenButton.color = .green
         scene.addChild(greenButton)
         
-        blueButton.size = CGSize(width: 50, height: 50)
-        blueButton.position = CGPoint(x: 0, y: -scene.frame.height / 2 + redButton.frame.height / 2)
-        blueButton.position.y += 50
+        blueButton.size = CGSize(width: buttonWidth, height: buttonWidth * 2)
+        blueButton.position = CGPoint(x: buttonWidth * 1.5 + (buttonWidth / 6) * 1.5, y: (-scene.frame.height + scene.frame.width) / 4 - scene.frame.width / 2)
         blueButton.color = .blue
         scene.addChild(blueButton)
         
-        purpleButton.size = CGSize(width: 50, height: 50)
-        purpleButton.position = CGPoint(x: 100, y: -scene.frame.height / 2 + redButton.frame.height / 2)
-        purpleButton.position.y += 50
+        purpleButton.size = CGSize(width: buttonWidth, height: buttonWidth * 2)
+        purpleButton.position = CGPoint(x: buttonWidth * 2.5 + (buttonWidth / 6) * 2.5, y: (-scene.frame.height + scene.frame.width) / 4 - scene.frame.width / 2)
         purpleButton.color = .purple
         scene.addChild(purpleButton)
         
