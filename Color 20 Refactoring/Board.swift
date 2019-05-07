@@ -13,7 +13,7 @@ class Board {
     var tiles: Array<Array<Tile>> = []
     var tilesCalledThisTurn: Array<Tile> = []
     
-    init(x: Int, y: Int) {
+    init(x: Int, y: Int, topRightColor: UIColor = [.red, .orange, .yellow, .green, .blue, .purple].randomElement()!) {
         for _ in 1...y {
             tiles.append([])
         }
@@ -23,7 +23,12 @@ class Board {
             }
         }
         self.randomizeBoard()
+        tiles[0][0].sprite.color = topRightColor
         tiles[0][0].captured = true
+        
+        let goodColors: Array<UIColor> = [.red, .orange, .yellow, .green, .blue, .purple].filter { $0 != tiles[0][0].sprite.color }
+        tiles[0][1].sprite.color = goodColors.randomElement()!
+        tiles[1][0].sprite.color = goodColors.randomElement()!
     }
     
     func randomizeBoard() {
@@ -34,10 +39,6 @@ class Board {
                 row[columnIndex].sprite.color = colors.randomElement()!
             }
         }
-        
-        let goodColors: Array<UIColor> = colors.filter { $0 != tiles[0][0].sprite.color }
-        tiles[0][1].sprite.color = goodColors.randomElement()!
-        tiles[1][0].sprite.color = goodColors.randomElement()!
     }
     
     func loadBoard(gameScene: SKScene, widthOfBoard: Int, centerX: Int = 0, centerY: Int = 0) {

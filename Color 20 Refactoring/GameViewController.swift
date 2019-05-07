@@ -46,13 +46,15 @@ class GameViewController: UIViewController {
                     if board.isFilled() {
                         boardDimension += 1
                         scoreLimit = boardDimension * 2
-                        resetBoard(dimension: boardDimension)
+                        resetBoard(dimension: boardDimension, topRightColor: color)
+                        board.animateCapturedTiles()
                         setScoreAndLabel(score: 0)
                     }
                     else if score == scoreLimit {
                         boardDimension = 2
                         scoreLimit = boardDimension * 2
-                        resetBoard(dimension: boardDimension)
+                        resetBoard(dimension: boardDimension, topRightColor: color)
+                        board.animateCapturedTiles()
                         setScoreAndLabel(score: 0)
                     }
                     else {
@@ -65,9 +67,9 @@ class GameViewController: UIViewController {
         }
     }
     
-    func resetBoard(dimension: Int) {
+    func resetBoard(dimension: Int, topRightColor: UIColor) {
         board.disconnect()
-        board = Board(x: dimension, y: dimension)
+        board = Board(x: dimension, y: dimension, topRightColor: topRightColor)
         board.loadBoard(gameScene: scene, widthOfBoard: Int(scene.frame.width))
     }
     
