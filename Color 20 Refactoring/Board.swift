@@ -10,10 +10,10 @@ import Foundation
 import SpriteKit
 
 class Board {
-    var tiles: Array<Array<Tile>>
+    var tiles: Array<Array<Tile>> = []
+    var tilesCalledThisTurn: Array<Tile> = []
     
     init(x: Int, y: Int) {
-        tiles = []
         for _ in 1...y {
             tiles.append([])
         }
@@ -65,11 +65,12 @@ class Board {
         }
     }
     
-    // TODO: Create array of tiles that have already been called to captureTiles and make them not do it again
     func doColor(color: UIColor) {
+        print()
+        tilesCalledThisTurn = []
         for y in 0...(tiles.count - 1) {
             for x in 0...(tiles[y].count - 1) {
-                if tiles[y][x].captured == true {
+                if tiles[y][x].captured == true && !tilesCalledThisTurn.contains(tiles[y][x]) {
                     captureTiles(color: color, x: x, y: y)
                 }
             }
@@ -85,6 +86,7 @@ class Board {
     }
     
     func captureTiles(color: UIColor, x: Int, y: Int) {
+        tilesCalledThisTurn.append(tiles[y][x])
         if y != 0 && tiles[y - 1][x].sprite.color == color && tiles[y - 1][x].captured == false {
             tiles[y - 1][x].captured = true
             captureTiles(color: color, x: x, y: y - 1)

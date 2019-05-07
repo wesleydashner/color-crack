@@ -9,7 +9,16 @@
 import Foundation
 import SpriteKit
 
-struct Tile {
+class Tile : Equatable {
     var sprite: SKSpriteNode
     var captured: Bool
+    
+    init(sprite: SKSpriteNode, captured: Bool) {
+        self.sprite = sprite
+        self.captured = captured
+    }
+    
+    static func == (lhs: Tile, rhs: Tile) -> Bool {
+        return lhs.sprite == rhs.sprite
+    }
 }
