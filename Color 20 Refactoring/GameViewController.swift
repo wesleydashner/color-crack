@@ -43,14 +43,14 @@ class GameViewController: UIViewController {
             for color: UIColor in [.red, .orange, .yellow, .green, .blue, .purple] {
                 if buttons.getButton(ofColor: color).sprite.contains(location) {
                     impactGenerator.impactOccurred()
-                    if score == scoreLimit {
-                        boardDimension = 2
+                    if board.isFilled() {
+                        boardDimension += 1
                         scoreLimit = boardDimension * 2
                         resetBoard(dimension: boardDimension)
                         setScoreAndLabel(score: 0)
                     }
-                    else if board.isFilled() {
-                        boardDimension += 1
+                    else if score == scoreLimit {
+                        boardDimension = 2
                         scoreLimit = boardDimension * 2
                         resetBoard(dimension: boardDimension)
                         setScoreAndLabel(score: 0)
