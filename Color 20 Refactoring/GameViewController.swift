@@ -57,6 +57,7 @@ class GameViewController: UIViewController {
                     }
                     else {
                         buttons.getButton(ofColor: color).buttonTapped(board: board)
+                        board.animateCapturedTiles()
                         setScoreAndLabel(score: score + 1)
                     }
                 }
