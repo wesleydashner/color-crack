@@ -14,6 +14,7 @@ class GameViewController: UIViewController {
     
     let scene = SKScene(size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
     var boardDimension = 2
+    var bestDimension = 2
     var scoreLimit = 3
     var board = Board(x: 2, y: 2)
     let buttons = Buttons(colors: [.red, .orange, .yellow, .green, .blue, .purple])
@@ -45,7 +46,15 @@ class GameViewController: UIViewController {
         currentLevelLabel.fontName = "Nexa Bold"
         scene.addChild(currentLevelLabel)
         
-        bestLevelLabel.text = "BEST: 13x13"
+        if UserDefaults.standard.integer(forKey: "best") > 0 {
+            bestDimension = UserDefaults.standard.integer(forKey: "best")
+        }
+        else {
+            UserDefaults.standard.set(2, forKey: "best")
+            bestDimension = 2
+        }
+        
+        bestLevelLabel.text = "BEST: \(bestDimension)x\(bestDimension)"
         bestLevelLabel.fontSize = 25
         bestLevelLabel.position = CGPoint(x: scene.frame.width / 4, y: scene.frame.width / 2 + bestLevelLabel.fontSize / 2 + 10)
         bestLevelLabel.fontName = "Nexa Bold"
@@ -65,6 +74,7 @@ class GameViewController: UIViewController {
                         resetBoard(dimension: boardDimension, topRightColor: color)
                         board.animateCapturedTiles()
                         setScoreAndLabel(score: 0)
+                        updateLevelAndBest(newDimension: boardDimension)
                     }
                     else if score == scoreLimit {
                         boardDimension = 2
@@ -72,6 +82,7 @@ class GameViewController: UIViewController {
                         resetBoard(dimension: boardDimension, topRightColor: color)
                         board.animateCapturedTiles()
                         setScoreAndLabel(score: 0)
+                        updateLevelAndBest(newDimension: boardDimension)
                     }
                     else {
                         buttons.getButton(ofColor: color).buttonTapped(board: board)
@@ -92,6 +103,16 @@ class GameViewController: UIViewController {
     func setScoreAndLabel(score: Int) {
         self.score = score
         scoreLabel.text = "\(score) / \(scoreLimit)"
+    }
+    
+    func updateLevelAndBest(newDimension: Int) {
+        bestDimension = UserDefaults.standard.integer(forKey: "best")
+        if newDimension > bestDimension {
+            bestDimension = newDimension
+            UserDefaults.standard.set(bestDimension, forKey: "best")
+            bestLevelLabel.text = "BEST: \(newDimension)x\(newDimension)"
+        }
+        currentLevelLabel.text = "LEVEL: \(newDimension)x\(newDimension)"
     }
     
     func getScoreLimit(dimension: Int) -> Int {
