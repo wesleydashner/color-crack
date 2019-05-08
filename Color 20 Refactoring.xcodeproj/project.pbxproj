@@ -18,6 +18,7 @@
 		3ECBAF4D228213D300A77E77 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECBAF4C228213D300A77E77 /* Button.swift */; };
 		3ECBAF4F228213ED00A77E77 /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECBAF4E228213ED00A77E77 /* Tile.swift */; };
 		3ECBAF512282147C00A77E77 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECBAF502282147C00A77E77 /* Buttons.swift */; };
+		3EE2F70422835F1C00DB8464 /* Nexa Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3EE2F70322835F1C00DB8464 /* Nexa Bold.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		3ECBAF4C228213D300A77E77 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		3ECBAF4E228213ED00A77E77 /* Tile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
 		3ECBAF502282147C00A77E77 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
+		3EE2F70322835F1C00DB8464 /* Nexa Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nexa Bold.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 		3E707898227E227F003D2DAA /* Color 20 Refactoring */ = {
 			isa = PBXGroup;
 			children = (
+				3EE2F70322835F1C00DB8464 /* Nexa Bold.otf */,
 				3E707899227E227F003D2DAA /* AppDelegate.swift */,
 				3E70789B227E227F003D2DAA /* GameScene.sks */,
 				3E70789D227E227F003D2DAA /* Actions.sks */,
@@ -141,6 +144,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E7078A5227E227F003D2DAA /* Main.storyboard in Resources */,
+				3EE2F70422835F1C00DB8464 /* Nexa Bold.otf in Resources */,
 				3E70789C227E227F003D2DAA /* GameScene.sks in Resources */,
 				3E7078A7227E2281003D2DAA /* Assets.xcassets in Resources */,
 				3E7078AA227E2281003D2DAA /* LaunchScreen.storyboard in Resources */,

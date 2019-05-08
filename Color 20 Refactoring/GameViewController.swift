@@ -14,7 +14,7 @@ class GameViewController: UIViewController {
     
     let scene = SKScene(size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
     var boardDimension = 2
-    var scoreLimit = 4
+    var scoreLimit = 3
     var board = Board(x: 2, y: 2)
     let buttons = Buttons(colors: [.red, .orange, .yellow, .green, .blue, .purple])
     let scoreLabel = SKLabelNode()
@@ -33,6 +33,7 @@ class GameViewController: UIViewController {
         
         scoreLabel.text = "\(score) / \(scoreLimit)"
         scoreLabel.position = CGPoint(x: 0, y: 300)
+        scoreLabel.fontName = "Nexa Bold"
         scene.addChild(scoreLabel)
     }
     
@@ -45,14 +46,14 @@ class GameViewController: UIViewController {
                     impactGenerator.impactOccurred()
                     if board.isFilled() {
                         boardDimension += 1
-                        scoreLimit = boardDimension * 2
+                        scoreLimit = getScoreLimit(dimension: boardDimension)
                         resetBoard(dimension: boardDimension, topRightColor: color)
                         board.animateCapturedTiles()
                         setScoreAndLabel(score: 0)
                     }
                     else if score == scoreLimit {
                         boardDimension = 2
-                        scoreLimit = boardDimension * 2
+                        scoreLimit = getScoreLimit(dimension: boardDimension)
                         resetBoard(dimension: boardDimension, topRightColor: color)
                         board.animateCapturedTiles()
                         setScoreAndLabel(score: 0)
@@ -76,6 +77,10 @@ class GameViewController: UIViewController {
     func setScoreAndLabel(score: Int) {
         self.score = score
         scoreLabel.text = "\(score) / \(scoreLimit)"
+    }
+    
+    func getScoreLimit(dimension: Int) -> Int {
+        return dimension * 2 - 1
     }
     
     override var prefersStatusBarHidden: Bool {
