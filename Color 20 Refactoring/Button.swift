@@ -23,7 +23,7 @@ class Button {
             if positionIndex == i {
                 sprite.position.x = CGFloat((7/6) * (-2.5 + Double(i)))
                 sprite.position.x *= CGFloat(buttonWidth)
-                sprite.position.y = CGFloat((-scene.frame.height + scene.frame.width) / 4 - scene.frame.width / 2)
+                sprite.position.y = CGFloat((-scene.frame.height - scene.frame.width) / 4)
             }
         }
         scene.addChild(sprite)

@@ -18,6 +18,8 @@ class GameViewController: UIViewController {
     var board = Board(x: 2, y: 2)
     let buttons = Buttons(colors: [.red, .orange, .yellow, .green, .blue, .purple])
     let scoreLabel = SKLabelNode()
+    let currentLevelLabel = SKLabelNode()
+    let bestLevelLabel = SKLabelNode()
     var score = 0
     let impactGenerator = UIImpactFeedbackGenerator(style: .light)
 
@@ -32,9 +34,22 @@ class GameViewController: UIViewController {
         buttons.loadButtons(scene: scene)
         
         scoreLabel.text = "\(score) / \(scoreLimit)"
-        scoreLabel.position = CGPoint(x: 0, y: 300)
+        scoreLabel.fontSize = 50
+        scoreLabel.position = CGPoint(x: 0, y: (scene.frame.height + scene.frame.width) / 4)
         scoreLabel.fontName = "Nexa Bold"
         scene.addChild(scoreLabel)
+        
+        currentLevelLabel.text = "LEVEL: \(boardDimension)x\(boardDimension)"
+        currentLevelLabel.fontSize = 25
+        currentLevelLabel.position = CGPoint(x: -scene.frame.width / 4, y: scene.frame.width / 2 + currentLevelLabel.fontSize / 2 + 10)
+        currentLevelLabel.fontName = "Nexa Bold"
+        scene.addChild(currentLevelLabel)
+        
+        bestLevelLabel.text = "BEST: 13x13"
+        bestLevelLabel.fontSize = 25
+        bestLevelLabel.position = CGPoint(x: scene.frame.width / 4, y: scene.frame.width / 2 + bestLevelLabel.fontSize / 2 + 10)
+        bestLevelLabel.fontName = "Nexa Bold"
+        scene.addChild(bestLevelLabel)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
