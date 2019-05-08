@@ -116,7 +116,15 @@ class GameViewController: UIViewController {
     }
     
     func getScoreLimit(dimension: Int) -> Int {
-        return dimension * 2 - 1
+        if dimension <= 10 {
+            return dimension * 2 - 1
+        }
+        if dimension % 2 == 1 {
+            return ((dimension - 9) / 2) * 3 + 17
+        }
+        else {
+            return ((dimension - 10) / 2) * 3 + 19
+        }
     }
     
     override var prefersStatusBarHidden: Bool {
