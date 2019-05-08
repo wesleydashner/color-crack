@@ -136,8 +136,9 @@ class Board {
                 }
             }
         }
+        let constant: CGFloat = CGFloat(Double((tiles.count + 2) / 4) * 0.1) + 1
         for tile in capturedTiles {
-            tile.sprite.run(.sequence([.scale(to: 1.2, duration: 0.1), .scale(to: 1, duration: 0.1)]))
+            tile.sprite.run(.sequence([.scale(to: constant, duration: 0.1), .scale(to: 1, duration: 0.1)]))
         }
     }
 }

@@ -40,7 +40,7 @@ class GameViewController: UIViewController {
         scoreLabel.fontName = "Nexa Bold"
         scene.addChild(scoreLabel)
         
-        currentLevelLabel.text = "LEVEL: \(boardDimension)x\(boardDimension)"
+        currentLevelLabel.text = "LEVEL: \(boardDimension)"
         currentLevelLabel.fontSize = 25
         currentLevelLabel.position = CGPoint(x: -scene.frame.width / 4, y: scene.frame.width / 2 + currentLevelLabel.fontSize / 2 + 10)
         currentLevelLabel.fontName = "Nexa Bold"
@@ -54,7 +54,7 @@ class GameViewController: UIViewController {
             bestDimension = 2
         }
         
-        bestLevelLabel.text = "BEST: \(bestDimension)x\(bestDimension)"
+        bestLevelLabel.text = "BEST: \(bestDimension)"
         bestLevelLabel.fontSize = 25
         bestLevelLabel.position = CGPoint(x: scene.frame.width / 4, y: scene.frame.width / 2 + bestLevelLabel.fontSize / 2 + 10)
         bestLevelLabel.fontName = "Nexa Bold"
@@ -110,9 +110,9 @@ class GameViewController: UIViewController {
         if newDimension > bestDimension {
             bestDimension = newDimension
             UserDefaults.standard.set(bestDimension, forKey: "best")
-            bestLevelLabel.text = "BEST: \(newDimension)x\(newDimension)"
+            bestLevelLabel.text = "BEST: \(newDimension)"
         }
-        currentLevelLabel.text = "LEVEL: \(newDimension)x\(newDimension)"
+        currentLevelLabel.text = "LEVEL: \(newDimension)"
     }
     
     func getScoreLimit(dimension: Int) -> Int {
