@@ -8,5 +8,6 @@ target 'Color 20 Refactoring' do
   # Pods for Color 20 Refactoring
 
   pod 'Firebase/Core'
+  pod 'Google-Mobile-Ads-SDK'
 
 end
