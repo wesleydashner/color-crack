@@ -19,6 +19,7 @@
 		3ECBAF4F228213ED00A77E77 /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECBAF4E228213ED00A77E77 /* Tile.swift */; };
 		3ECBAF512282147C00A77E77 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECBAF502282147C00A77E77 /* Buttons.swift */; };
 		3EE2F70422835F1C00DB8464 /* Nexa Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3EE2F70322835F1C00DB8464 /* Nexa Bold.otf */; };
+		3EE2F7062284E8F700DB8464 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3EE2F7052284E8F700DB8464 /* GoogleService-Info.plist */; };
 		FA8A3F9D73AACB150764DAFC /* Pods_Color_20_Refactoring.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AB87A4C25E232D96A0B215B /* Pods_Color_20_Refactoring.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +38,7 @@
 		3ECBAF4E228213ED00A77E77 /* Tile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
 		3ECBAF502282147C00A77E77 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		3EE2F70322835F1C00DB8464 /* Nexa Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nexa Bold.otf"; sourceTree = "<group>"; };
+		3EE2F7052284E8F700DB8464 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4AB87A4C25E232D96A0B215B /* Pods_Color_20_Refactoring.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Color_20_Refactoring.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B02C051BCF004DE42FFDC81 /* Pods-Color 20 Refactoring.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Color 20 Refactoring.release.xcconfig"; path = "Target Support Files/Pods-Color 20 Refactoring/Pods-Color 20 Refactoring.release.xcconfig"; sourceTree = "<group>"; };
 		6253D99320BD50F9D8B45030 /* Pods-Color 20 Refactoring.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Color 20 Refactoring.debug.xcconfig"; path = "Target Support Files/Pods-Color 20 Refactoring/Pods-Color 20 Refactoring.debug.xcconfig"; sourceTree = "<group>"; };
@@ -68,7 +70,6 @@
 				6253D99320BD50F9D8B45030 /* Pods-Color 20 Refactoring.debug.xcconfig */,
 				4B02C051BCF004DE42FFDC81 /* Pods-Color 20 Refactoring.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -106,6 +107,7 @@
 				3E7078A6227E2281003D2DAA /* Assets.xcassets */,
 				3E7078A8227E2281003D2DAA /* LaunchScreen.storyboard */,
 				3E7078AB227E2281003D2DAA /* Info.plist */,
+				3EE2F7052284E8F700DB8464 /* GoogleService-Info.plist */,
 			);
 			path = "Color 20 Refactoring";
 			sourceTree = "<group>";
@@ -173,6 +175,7 @@
 				3E7078A5227E227F003D2DAA /* Main.storyboard in Resources */,
 				3EE2F70422835F1C00DB8464 /* Nexa Bold.otf in Resources */,
 				3E70789C227E227F003D2DAA /* GameScene.sks in Resources */,
+				3EE2F7062284E8F700DB8464 /* GoogleService-Info.plist in Resources */,
 				3E7078A7227E2281003D2DAA /* Assets.xcassets in Resources */,
 				3E7078AA227E2281003D2DAA /* LaunchScreen.storyboard in Resources */,
 				3E70789E227E227F003D2DAA /* Actions.sks in Resources */,
