@@ -22,6 +22,8 @@ class Tile : NSObject, NSCoding {
         return lhs.sprite == rhs.sprite
     }
     
+    
+    // NSCoding
     enum Keys: String {
         case sprite = "Sprite"
         case captured = "Captured"

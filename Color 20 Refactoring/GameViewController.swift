@@ -26,6 +26,15 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if loadBoard() != nil {
+            board = loadBoard()!
+            boardDimension = board.tiles.count
+            scoreLimit = getScoreLimit(dimension: boardDimension)
+        }
+        
+        score = UserDefaults.standard.integer(forKey: "currentScore")
+        
         let view = self.view as! SKView?
         scene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         scene.scaleMode = .aspectFit
@@ -89,6 +98,8 @@ class GameViewController: UIViewController {
                         board.animateCapturedTiles()
                         setScoreAndLabel(score: score + 1)
                     }
+                    UserDefaults.standard.set(score, forKey: "currentScore")
+                    saveBoard(board: board)
                 }
             }
         }
@@ -117,6 +128,14 @@ class GameViewController: UIViewController {
     
     func getScoreLimit(dimension: Int) -> Int {
         return dimension * 2 - Int((dimension - 1) / 5)
+    }
+    
+    private func saveBoard(board: Board) {
+        NSKeyedArchiver.archiveRootObject(board, toFile: Board.ArchiveURL.path)
+    }
+    
+    private func loadBoard() -> Board? {
+        return NSKeyedUnarchiver.unarchiveObject(withFile: Board.ArchiveURL.path) as? Board
     }
     
     override var prefersStatusBarHidden: Bool {

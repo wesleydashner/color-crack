@@ -9,11 +9,12 @@
 import Foundation
 import SpriteKit
 
-class Board: NSCoding {
+class Board: NSObject, NSCoding {
     var tiles: Array<Array<Tile>> = []
     var tilesCalledThisTurn: Array<Tile> = []
     
     init(x: Int, y: Int, topRightColor: UIColor = [.red, .orange, .yellow, .green, .blue, .purple].randomElement()!) {
+        super.init()
         for _ in 1...y {
             tiles.append([])
         }
@@ -150,6 +151,7 @@ class Board: NSCoding {
         case tiles = "Tiles"
     }
     
+    // NSCoding
     func encode(with aCoder: NSCoder) {
         aCoder.encode(tiles, forKey: Keys.tiles.rawValue)
     }
@@ -158,4 +160,7 @@ class Board: NSCoding {
         let tiles = aDecoder.decodeObject(forKey: Keys.tiles.rawValue) as! Array<Array<Tile>>
         self.init(tiles: tiles)
     }
+    
+    static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
+    static let ArchiveURL = DocumentsDirectory.appendingPathComponent("board")
 }
