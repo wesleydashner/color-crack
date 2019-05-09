@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 
-class Board {
+class Board: NSCoding {
     var tiles: Array<Array<Tile>> = []
     var tilesCalledThisTurn: Array<Tile> = []
     
@@ -29,6 +29,10 @@ class Board {
         let goodColors: Array<UIColor> = [.red, .orange, .yellow, .green, .blue, .purple].filter { $0 != tiles[0][0].sprite.color }
         tiles[0][1].sprite.color = goodColors.randomElement()!
         tiles[1][0].sprite.color = goodColors.randomElement()!
+    }
+    
+    init(tiles: Array<Array<Tile>>) {
+        self.tiles = tiles
     }
     
     func randomizeBoard() {
@@ -140,5 +144,18 @@ class Board {
         for tile in capturedTiles {
             tile.sprite.run(.sequence([.scale(to: constant, duration: 0.1), .scale(to: 1, duration: 0.1)]))
         }
+    }
+    
+    enum Keys: String {
+        case tiles = "Tiles"
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(tiles, forKey: Keys.tiles.rawValue)
+    }
+    
+    required convenience init?(coder aDecoder: NSCoder) {
+        let tiles = aDecoder.decodeObject(forKey: Keys.tiles.rawValue) as! Array<Array<Tile>>
+        self.init(tiles: tiles)
     }
 }

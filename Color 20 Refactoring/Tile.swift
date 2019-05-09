@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 
-class Tile : Equatable {
+class Tile : Equatable, NSCoding {
     var sprite: SKSpriteNode
     var captured: Bool
     
@@ -20,5 +20,21 @@ class Tile : Equatable {
     
     static func == (lhs: Tile, rhs: Tile) -> Bool {
         return lhs.sprite == rhs.sprite
+    }
+    
+    enum Keys: String {
+        case sprite = "Sprite"
+        case captured = "Captured"
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(sprite, forKey: Keys.sprite.rawValue)
+        aCoder.encode(captured, forKey: Keys.captured.rawValue)
+    }
+    
+    required convenience init?(coder aDecoder: NSCoder) {
+        let sprite = aDecoder.decodeObject(forKey: Keys.sprite.rawValue) as! SKSpriteNode
+        let captured = aDecoder.decodeBool(forKey: Keys.captured.rawValue)
+        self.init(sprite: sprite, captured: captured)
     }
 }
