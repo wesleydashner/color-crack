@@ -127,7 +127,7 @@ class GameViewController: UIViewController {
     }
     
     func getScoreLimit(dimension: Int) -> Int {
-        return dimension * 2 - Int((dimension - 1) / 5)
+        return dimension * 2 - Int((dimension - 1) / 6)
     }
     
     private func saveBoard(board: Board) {
