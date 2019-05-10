@@ -12,6 +12,7 @@ import GameplayKit
 import GoogleMobileAds
 
 let colors: [UIColor] = [.red, .orange, .yellow, .green, .blue, .purple]
+let impactGenerator = UIImpactFeedbackGenerator(style: .light)
 
 class GameViewController: UIViewController, GADInterstitialDelegate {
     
@@ -27,7 +28,6 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
     let bestLevelLabel = SKLabelNode()
     let moneyLabel = SKLabelNode()
     let storeButton = SKSpriteNode(imageNamed: "store")
-    let impactGenerator = UIImpactFeedbackGenerator(style: .light)
     var interstitial: GADInterstitial!
 
     override func viewDidLoad() {
@@ -43,6 +43,17 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
         
         score = UserDefaults.standard.integer(forKey: "currentScore")
         
+        if UserDefaults.standard.integer(forKey: "startLevel") == 0 {
+            UserDefaults.standard.set(2, forKey: "startLevel")
+        }
+        
+        if UserDefaults.standard.integer(forKey: "startLevel") > boardDimension {
+            board = Board(x: UserDefaults.standard.integer(forKey: "startLevel"), y: UserDefaults.standard.integer(forKey: "startLevel"))
+            boardDimension = UserDefaults.standard.integer(forKey: "startLevel")
+            scoreLimit = getScoreLimit(dimension: UserDefaults.standard.integer(forKey: "startLevel"))
+            score = 0
+        }
+    
         let view = self.view as! SKView?
         scene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         scene.scaleMode = .aspectFit
@@ -128,7 +139,7 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
                     }
                     // if user loses this level
                     else if score == scoreLimit {
-                        boardDimension = 2
+                        boardDimension = UserDefaults.standard.integer(forKey: "startLevel")
                         scoreLimit = getScoreLimit(dimension: boardDimension)
                         resetBoard(dimension: boardDimension, topRightColor: color)
                         board.animateCapturedTiles()
