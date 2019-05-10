@@ -17,12 +17,14 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
     var boardDimension = 2
     var bestDimension = 2
     var scoreLimit = 3
+    var score = 0
     var board = Board(x: 2, y: 2)
     let buttons = Buttons(colors: [.red, .orange, .yellow, .green, .blue, .purple])
     let scoreLabel = SKLabelNode()
     let currentLevelLabel = SKLabelNode()
     let bestLevelLabel = SKLabelNode()
-    var score = 0
+    let moneyLabel = SKLabelNode()
+    let storeButton = SKSpriteNode(imageNamed: "store")
     let impactGenerator = UIImpactFeedbackGenerator(style: .light)
     var interstitial: GADInterstitial!
 
@@ -59,6 +61,29 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
         currentLevelLabel.fontName = "Nexa Bold"
         scene.addChild(currentLevelLabel)
         
+        let money = UserDefaults.standard.integer(forKey: "money")
+        moneyLabel.text = "$\(money)"
+        moneyLabel.fontSize = 20
+        moneyLabel.fontColor = .yellow
+        moneyLabel.fontName = "Nexa Bold"
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            moneyLabel.fontSize *= 2
+            moneyLabel.position = CGPoint(x: scene.frame.width / 2 - moneyLabel.frame.width / 2 - 10, y: (scene.frame.height + scene.frame.width) / 4 + scene.frame.height / 32)
+        }
+        else {
+            moneyLabel.position = CGPoint(x: scene.frame.width / 2 - moneyLabel.frame.width / 2 - 10, y: (scene.frame.height + scene.frame.width) / 4 + scene.frame.height / 16)
+        }
+        scene.addChild(moneyLabel)
+        
+        storeButton.size = CGSize(width: moneyLabel.frame.height, height: moneyLabel.frame.height)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            storeButton.position = CGPoint(x: -scene.frame.width / 2 + storeButton.frame.width / 2 + 10, y: (scene.frame.height + scene.frame.width) / 4 + scene.frame.height / 32 + 12)
+        }
+        else {
+            storeButton.position = CGPoint(x: -scene.frame.width / 2 + storeButton.frame.width / 2 + 10, y: (scene.frame.height + scene.frame.width) / 4 + scene.frame.height / 16 + 6)
+        }
+        scene.addChild(storeButton)
+        
         if UserDefaults.standard.integer(forKey: "best") > 0 {
             bestDimension = UserDefaults.standard.integer(forKey: "best")
         }
@@ -78,10 +103,17 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
         for t in touches {
             let location = t.location(in: scene)
             
+            if storeButton.contains(location) {
+                impactGenerator.impactOccurred()
+                self.performSegue(withIdentifier: "toShop", sender: self)
+            }
+            
             for color: UIColor in [.red, .orange, .yellow, .green, .blue, .purple] {
                 if buttons.getButton(ofColor: color).sprite.contains(location) {
                     impactGenerator.impactOccurred()
+                    // if user wins this level
                     if board.isFilled() {
+                        updateMoneyValueAndLabel(value: UserDefaults.standard.integer(forKey: "money") + boardDimension)
                         if boardDimension >= 6 && boardDimension % 3 == 0 {
                             showAd()
                         }
@@ -92,6 +124,7 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
                         setScoreAndLabel(score: 0)
                         updateLevelAndBest(newDimension: boardDimension)
                     }
+                    // if user loses this level
                     else if score == scoreLimit {
                         boardDimension = 2
                         scoreLimit = getScoreLimit(dimension: boardDimension)
@@ -100,6 +133,7 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
                         setScoreAndLabel(score: 0)
                         updateLevelAndBest(newDimension: boardDimension)
                     }
+                    // else it's just a regular move
                     else {
                         buttons.getButton(ofColor: color).buttonTapped(board: board)
                         board.animateCapturedTiles()
@@ -143,6 +177,17 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
     
     private func loadBoard() -> Board? {
         return NSKeyedUnarchiver.unarchiveObject(withFile: Board.ArchiveURL.path) as? Board
+    }
+    
+    func updateMoneyValueAndLabel(value: Int) {
+        UserDefaults.standard.set(value, forKey: "money")
+        moneyLabel.text = "$\(value)"
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            moneyLabel.position = CGPoint(x: scene.frame.width / 2 - moneyLabel.frame.width / 2 - 10, y: (scene.frame.height + scene.frame.width) / 4 + scene.frame.height / 32)
+        }
+        else {
+            moneyLabel.position = CGPoint(x: scene.frame.width / 2 - moneyLabel.frame.width / 2 - 10, y: (scene.frame.height + scene.frame.width) / 4 + scene.frame.height / 16)
+        }
     }
     
     func createAndLoadInterstitial() -> GADInterstitial {
