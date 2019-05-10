@@ -11,6 +11,8 @@ import SpriteKit
 import GameplayKit
 import GoogleMobileAds
 
+let colors: [UIColor] = [.red, .orange, .yellow, .green, .blue, .purple]
+
 class GameViewController: UIViewController, GADInterstitialDelegate {
     
     let scene = SKScene(size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
@@ -19,7 +21,7 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
     var scoreLimit = 3
     var score = 0
     var board = Board(x: 2, y: 2)
-    let buttons = Buttons(colors: [.red, .orange, .yellow, .green, .blue, .purple])
+    let buttons = Buttons(colors: colors)
     let scoreLabel = SKLabelNode()
     let currentLevelLabel = SKLabelNode()
     let bestLevelLabel = SKLabelNode()
@@ -108,7 +110,7 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
                 self.performSegue(withIdentifier: "toShop", sender: self)
             }
             
-            for color: UIColor in [.red, .orange, .yellow, .green, .blue, .purple] {
+            for color: UIColor in colors {
                 if buttons.getButton(ofColor: color).sprite.contains(location) {
                     impactGenerator.impactOccurred()
                     // if user wins this level

@@ -15,6 +15,7 @@ class ShopViewController: UIViewController {
     let scene = SKScene(size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
     let moneyLabel = SKLabelNode()
     let upgradeButton = SKSpriteNode(imageNamed: "upgrade")
+    let backButton = SKSpriteNode(imageNamed: "back")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +43,15 @@ class ShopViewController: UIViewController {
         upgradeButton.position = CGPoint(x: 0, y: 0)
         upgradeButton.size = CGSize(width: scene.frame.width / 2, height: scene.frame.width / 2)
         scene.addChild(upgradeButton)
+        
+        backButton.size = CGSize(width: moneyLabel.frame.height, height: moneyLabel.frame.height)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            backButton.position = CGPoint(x: -scene.frame.width / 2 + backButton.frame.width / 2 + 10, y: (scene.frame.height + scene.frame.width) / 4 + scene.frame.height / 32 + 12)
+        }
+        else {
+            backButton.position = CGPoint(x: -scene.frame.width / 2 + backButton.frame.width / 2 + 10, y: (scene.frame.height + scene.frame.width) / 4 + scene.frame.height / 16 + 6)
+        }
+        scene.addChild(backButton)
     }
     
     func getCost() -> Int {

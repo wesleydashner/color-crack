@@ -10,9 +10,9 @@ import Foundation
 import SpriteKit
 
 class Buttons {
-    var buttons: Array<Button> = []
+    var buttons: [Button] = []
     
-    init(colors: Array<UIColor>) {
+    init(colors: [UIColor]) {
         for color in colors {
             buttons.append(Button(color: color))
         }

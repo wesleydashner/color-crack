@@ -10,10 +10,10 @@ import Foundation
 import SpriteKit
 
 class Board: NSObject, NSCoding {
-    var tiles: Array<Array<Tile>> = []
-    var tilesCalledThisTurn: Array<Tile> = []
+    var tiles: [[Tile]] = []
+    var tilesCalledThisTurn: [Tile] = []
     
-    init(x: Int, y: Int, topRightColor: UIColor = [.red, .orange, .yellow, .green, .blue, .purple].randomElement()!) {
+    init(x: Int, y: Int, topRightColor: UIColor = colors.randomElement()!) {
         super.init()
         for _ in 1...y {
             tiles.append([])
@@ -27,18 +27,16 @@ class Board: NSObject, NSCoding {
         tiles[0][0].sprite.color = topRightColor
         tiles[0][0].captured = true
         
-        let goodColors: Array<UIColor> = [.red, .orange, .yellow, .green, .blue, .purple].filter { $0 != tiles[0][0].sprite.color }
+        let goodColors: [UIColor] = colors.filter { $0 != tiles[0][0].sprite.color }
         tiles[0][1].sprite.color = goodColors.randomElement()!
         tiles[1][0].sprite.color = goodColors.randomElement()!
     }
     
-    init(tiles: Array<Array<Tile>>) {
+    init(tiles: [[Tile]]) {
         self.tiles = tiles
     }
     
     func randomizeBoard() {
-        let colors: Array<UIColor> = [.red, .orange, .yellow, .green, .blue, .purple]
-        
         for row in tiles {
             for columnIndex in 0...(row.count - 1) {
                 row[columnIndex].sprite.color = colors.randomElement()!
@@ -131,7 +129,7 @@ class Board: NSObject, NSCoding {
     }
     
     func animateCapturedTiles() {
-        var capturedTiles: Array<Tile> = []
+        var capturedTiles: [Tile] = []
         for y in 0...(tiles.count - 1) {
             for x in 0...(tiles[y].count - 1) {
                 tiles[y][x].sprite.zPosition = 0
@@ -157,7 +155,7 @@ class Board: NSObject, NSCoding {
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
-        let tiles = aDecoder.decodeObject(forKey: Keys.tiles.rawValue) as! Array<Array<Tile>>
+        let tiles = aDecoder.decodeObject(forKey: Keys.tiles.rawValue) as! [[Tile]]
         self.init(tiles: tiles)
     }
     
