@@ -82,6 +82,9 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
                 if buttons.getButton(ofColor: color).sprite.contains(location) {
                     impactGenerator.impactOccurred()
                     if board.isFilled() {
+                        if boardDimension >= 10 && (boardDimension - 10) % 2 == 0 {
+                            showAd()
+                        }
                         boardDimension += 1
                         scoreLimit = getScoreLimit(dimension: boardDimension)
                         resetBoard(dimension: boardDimension, topRightColor: color)
