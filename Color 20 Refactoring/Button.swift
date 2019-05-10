@@ -18,7 +18,14 @@ class Button {
     
     func loadButton(scene: SKScene, positionIndex: Int) {
         let buttonWidth = scene.frame.width / (6 + 7/6)
-        sprite.size = CGSize(width: buttonWidth, height: buttonWidth * 2)
+        var buttonHeight: CGFloat
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            buttonHeight = buttonWidth
+        }
+        else {
+            buttonHeight = buttonWidth * 2
+        }
+        sprite.size = CGSize(width: buttonWidth, height: buttonHeight)
         for i in 0...5 {
             if positionIndex == i {
                 sprite.position.x = CGFloat((7/6) * (-2.5 + Double(i)))
