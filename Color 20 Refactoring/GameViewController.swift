@@ -82,7 +82,7 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
                 if buttons.getButton(ofColor: color).sprite.contains(location) {
                     impactGenerator.impactOccurred()
                     if board.isFilled() {
-                        if boardDimension >= 10 && (boardDimension - 10) % 2 == 0 {
+                        if boardDimension >= 6 && boardDimension % 2 == 0 {
                             showAd()
                         }
                         boardDimension += 1
@@ -99,7 +99,6 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
                         board.animateCapturedTiles()
                         setScoreAndLabel(score: 0)
                         updateLevelAndBest(newDimension: boardDimension)
-                        showAd()
                     }
                     else {
                         buttons.getButton(ofColor: color).buttonTapped(board: board)
