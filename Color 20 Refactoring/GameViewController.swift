@@ -9,8 +9,9 @@
 import UIKit
 import SpriteKit
 import GameplayKit
+import GoogleMobileAds
 
-class GameViewController: UIViewController {
+class GameViewController: UIViewController, GADInterstitialDelegate {
     
     let scene = SKScene(size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
     var boardDimension = 2
@@ -23,9 +24,12 @@ class GameViewController: UIViewController {
     let bestLevelLabel = SKLabelNode()
     var score = 0
     let impactGenerator = UIImpactFeedbackGenerator(style: .light)
+    var interstitial: GADInterstitial!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        interstitial = createAndLoadInterstitial()
         
         if loadBoard() != nil {
             board = loadBoard()!
@@ -92,6 +96,7 @@ class GameViewController: UIViewController {
                         board.animateCapturedTiles()
                         setScoreAndLabel(score: 0)
                         updateLevelAndBest(newDimension: boardDimension)
+                        showAd()
                     }
                     else {
                         buttons.getButton(ofColor: color).buttonTapped(board: board)
@@ -136,6 +141,27 @@ class GameViewController: UIViewController {
     
     private func loadBoard() -> Board? {
         return NSKeyedUnarchiver.unarchiveObject(withFile: Board.ArchiveURL.path) as? Board
+    }
+    
+    func createAndLoadInterstitial() -> GADInterstitial {
+        // Actual adUnitID: ca-app-pub-4988685536796370/8629625562
+        let interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+        interstitial.delegate = self
+        interstitial.load(GADRequest())
+        return interstitial
+    }
+    
+    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
+        interstitial = createAndLoadInterstitial()
+    }
+    
+    func showAd() {
+        if interstitial.isReady {
+            interstitial.present(fromRootViewController: self)
+        }
+        else {
+            print("Ad wasn't ready")
+        }
     }
     
     override var prefersStatusBarHidden: Bool {
