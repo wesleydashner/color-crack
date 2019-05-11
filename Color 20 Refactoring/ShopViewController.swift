@@ -96,9 +96,9 @@ class ShopViewController: UIViewController, GADRewardBasedVideoAdDelegate {
             }
             
             if upgradeButton.contains(location) {
-                // TODO: Animate button based on if transaction is valid or not
                 if UserDefaults.standard.integer(forKey: "money") >= getCost() {
                     notificationGenerator.notificationOccurred(.success)
+                    upgradeButton.run(.sequence([.scale(to: 1.2, duration: 0.1), .scale(to: 1, duration: 0.1)]))
                     UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "money") - getCost(), forKey: "money")
                     UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "startLevel") + 1, forKey: "startLevel")
                     startLevelLabel.text = "START LEVEL: \(UserDefaults.standard.integer(forKey: "startLevel"))"
@@ -107,6 +107,7 @@ class ShopViewController: UIViewController, GADRewardBasedVideoAdDelegate {
                 }
                 else {
                     notificationGenerator.notificationOccurred(.error)
+                    upgradeButton.run(.sequence([.move(by: CGVector(dx: -10, dy: 0), duration: 0.05), .move(by: CGVector(dx: 20, dy: 0), duration: 0.1), .move(by: CGVector(dx: -20, dy: 0), duration: 0.1), .move(by: CGVector(dx: 10, dy: 0), duration: 0.05)]))
                 }
             }
             
