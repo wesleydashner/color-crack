@@ -123,9 +123,9 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
             
             for color: UIColor in colors {
                 if buttons.getButton(ofColor: color).sprite.contains(location) {
-                    impactGenerator.impactOccurred()
                     // if user wins this level
                     if board.isFilled() {
+                        impactGenerator.impactOccurred()
                         updateMoneyValueAndLabel(value: UserDefaults.standard.integer(forKey: "money") + boardDimension)
                         if boardDimension >= 6 && boardDimension % 3 == 0 {
                             showAd()
@@ -139,6 +139,7 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
                     }
                     // if user loses this level
                     else if score == scoreLimit {
+                        impactGenerator.impactOccurred()
                         boardDimension = UserDefaults.standard.integer(forKey: "startLevel")
                         scoreLimit = getScoreLimit(dimension: boardDimension)
                         resetBoard(dimension: boardDimension, topRightColor: color)
@@ -146,8 +147,9 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
                         setScoreAndLabel(score: 0)
                         updateLevelAndBest(newDimension: boardDimension)
                     }
-                    // else it's just a regular move
-                    else {
+                    // else it's just a regular move (make sure it's not the current color)
+                    else if color != board.tiles[0][0].sprite.color {
+                        impactGenerator.impactOccurred()
                         buttons.getButton(ofColor: color).buttonTapped(board: board)
                         board.animateCapturedTiles()
                         setScoreAndLabel(score: score + 1)
