@@ -47,6 +47,10 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
             UserDefaults.standard.set(2, forKey: "startLevel")
         }
         
+//        UserDefaults.standard.set(2, forKey: "startLevel")
+//        UserDefaults.standard.set(2, forKey: "best")
+//        UserDefaults.standard.set(0, forKey: "money")
+        
         if UserDefaults.standard.integer(forKey: "startLevel") > boardDimension {
             board = Board(x: UserDefaults.standard.integer(forKey: "startLevel"), y: UserDefaults.standard.integer(forKey: "startLevel"))
             boardDimension = UserDefaults.standard.integer(forKey: "startLevel")
@@ -183,7 +187,36 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
     }
     
     func getScoreLimit(dimension: Int) -> Int {
-        return dimension * 2 - Int((dimension - 1) / 6)
+        if dimension <= 10 {
+            return dimension * 2
+        }
+        else if dimension <= 19 {
+            return dimension * 2 - 1
+        }
+        else if dimension <= 27 {
+            return dimension * 2 - 2
+        }
+        else if dimension <= 34 {
+            return dimension * 2 - 3
+        }
+        else if dimension <= 40 {
+            return dimension * 2 - 4
+        }
+        else if dimension <= 45 {
+            return dimension * 2 - 5
+        }
+        else if dimension <= 49 {
+            return dimension * 2 - 6
+        }
+        else if dimension <= 52 {
+            return dimension * 2 - 7
+        }
+        else if dimension <= 54 {
+            return dimension * 2 - 8
+        }
+        else {
+            return 100 + (dimension - 54)
+        }
     }
     
     private func saveBoard(board: Board) {
