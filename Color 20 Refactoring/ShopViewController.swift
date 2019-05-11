@@ -11,6 +11,10 @@ import SpriteKit
 import GameplayKit
 import GoogleMobileAds
 
+// Actual Ad ID: ca-app-pub-4988685536796370/1078330803
+// Test Ad ID: ca-app-pub-3940256099942544/1712485313
+let rewardedVideoID = "ca-app-pub-3940256099942544/1712485313"
+
 class ShopViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     
     let scene = SKScene(size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
@@ -21,15 +25,11 @@ class ShopViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     let upgradeCostLabel = SKLabelNode()
     let rewardedAdButton = SKLabelNode()
     let notificationGenerator = UINotificationFeedbackGenerator()
-    // Actual Ad ID: ca-app-pub-4988685536796370/1078330803
-    // Test Ad ID: ca-app-pub-3940256099942544/1712485313
-    let rewardedVideoID = "ca-app-pub-3940256099942544/1712485313"
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         GADRewardBasedVideoAd.sharedInstance().delegate = self
-        GADRewardBasedVideoAd.sharedInstance().load(GADRequest(), withAdUnitID: rewardedVideoID)
         
         let view = self.view as! SKView?
         scene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
