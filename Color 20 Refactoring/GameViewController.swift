@@ -131,7 +131,7 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
                     if board.isFilled() {
                         impactGenerator.impactOccurred()
                         updateMoneyValueAndLabel(value: UserDefaults.standard.integer(forKey: "money") + boardDimension)
-                        if boardDimension >= 6 && boardDimension % 3 == 0 {
+                        if boardDimension >= 9 && boardDimension % 3 == 0 {
                             showAd()
                         }
                         boardDimension += 1
