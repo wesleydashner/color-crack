@@ -72,7 +72,7 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
         scoreLabel.fontName = "Nexa Bold"
         scene.addChild(scoreLabel)
         
-        currentLevelLabel.text = "LEVEL: \(boardDimension)"
+        currentLevelLabel.text = "LEVEL: \(boardDimension)x\(boardDimension)"
         currentLevelLabel.fontSize = 25
         currentLevelLabel.position = CGPoint(x: -scene.frame.width / 4, y: scene.frame.width / 2 + currentLevelLabel.fontSize / 2 + 10)
         currentLevelLabel.fontName = "Nexa Bold"
@@ -109,7 +109,7 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
             bestDimension = 2
         }
         
-        bestLevelLabel.text = "BEST: \(bestDimension)"
+        bestLevelLabel.text = "BEST: \(bestDimension)x\(bestDimension)"
         bestLevelLabel.fontSize = 25
         bestLevelLabel.position = CGPoint(x: scene.frame.width / 4, y: scene.frame.width / 2 + bestLevelLabel.fontSize / 2 + 10)
         bestLevelLabel.fontName = "Nexa Bold"
@@ -181,9 +181,9 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
         if newDimension > bestDimension {
             bestDimension = newDimension
             UserDefaults.standard.set(bestDimension, forKey: "best")
-            bestLevelLabel.text = "BEST: \(newDimension)"
+            bestLevelLabel.text = "BEST: \(newDimension)x\(newDimension)"
         }
-        currentLevelLabel.text = "LEVEL: \(newDimension)"
+        currentLevelLabel.text = "LEVEL: \(newDimension)x\(newDimension)"
     }
     
     func getScoreLimit(dimension: Int) -> Int {

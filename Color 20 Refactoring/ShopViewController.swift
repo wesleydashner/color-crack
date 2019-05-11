@@ -67,7 +67,7 @@ class ShopViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         }
         scene.addChild(backButton)
         
-        startLevelLabel.text = "START LEVEL: \(UserDefaults.standard.integer(forKey: "startLevel"))"
+        startLevelLabel.text = "START LEVEL: \(UserDefaults.standard.integer(forKey: "startLevel"))x\(UserDefaults.standard.integer(forKey: "startLevel"))"
         startLevelLabel.fontSize = 35
         startLevelLabel.fontColor = .white
         startLevelLabel.fontName = "Nexa Bold"
@@ -105,7 +105,7 @@ class ShopViewController: UIViewController, GADRewardBasedVideoAdDelegate {
                     upgradeButton.run(.sequence([.scale(to: 1.2, duration: 0.1), .scale(to: 1, duration: 0.1)]))
                     UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "money") - getCost(), forKey: "money")
                     UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "startLevel") + 1, forKey: "startLevel")
-                    startLevelLabel.text = "START LEVEL: \(UserDefaults.standard.integer(forKey: "startLevel"))"
+                    startLevelLabel.text = "START LEVEL: \(UserDefaults.standard.integer(forKey: "startLevel"))x\(UserDefaults.standard.integer(forKey: "startLevel"))"
                     upgradeCostLabel.text = "COST: $\(getCost())"
                     updateMoneyLabel()
                 }
