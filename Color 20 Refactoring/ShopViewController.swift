@@ -9,8 +9,9 @@
 import UIKit
 import SpriteKit
 import GameplayKit
+import GoogleMobileAds
 
-class ShopViewController: UIViewController {
+class ShopViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     
     let scene = SKScene(size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
     let moneyLabel = SKLabelNode()
@@ -18,10 +19,17 @@ class ShopViewController: UIViewController {
     let backButton = SKSpriteNode(imageNamed: "back")
     let startLevelLabel = SKLabelNode()
     let upgradeCostLabel = SKLabelNode()
+    let rewardedAdButton = SKLabelNode()
     let notificationGenerator = UINotificationFeedbackGenerator()
+    // Actual Ad ID: ca-app-pub-4988685536796370/1078330803
+    // Test Ad ID: ca-app-pub-3940256099942544/1712485313
+    let rewardedVideoID = "ca-app-pub-3940256099942544/1712485313"
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        GADRewardBasedVideoAd.sharedInstance().delegate = self
+        GADRewardBasedVideoAd.sharedInstance().load(GADRequest(), withAdUnitID: rewardedVideoID)
         
         let view = self.view as! SKView?
         scene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -69,6 +77,13 @@ class ShopViewController: UIViewController {
         upgradeCostLabel.position = CGPoint(x: 0, y: -upgradeButton.frame.height / 2)
         scene.addChild(upgradeCostLabel)
         
+        rewardedAdButton.text = "WATCH AN AD FOR $20"
+        rewardedAdButton.color = .white
+        rewardedAdButton.fontSize = 25
+        rewardedAdButton.fontColor = .yellow
+        rewardedAdButton.fontName = "Nexa Bold"
+        rewardedAdButton.position = CGPoint(x: 0, y: -scene.frame.width + rewardedAdButton.frame.height)
+        scene.addChild(rewardedAdButton)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -81,25 +96,48 @@ class ShopViewController: UIViewController {
             }
             
             if upgradeButton.contains(location) {
+                // TODO: Animate button based on if transaction is valid or not
                 if UserDefaults.standard.integer(forKey: "money") >= getCost() {
                     notificationGenerator.notificationOccurred(.success)
                     UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "money") - getCost(), forKey: "money")
                     UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "startLevel") + 1, forKey: "startLevel")
                     startLevelLabel.text = "START LEVEL: \(UserDefaults.standard.integer(forKey: "startLevel"))"
                     upgradeCostLabel.text = "COST: $\(getCost())"
-                    moneyLabel.text = "$\(UserDefaults.standard.integer(forKey: "money"))"
-                    if UIDevice.current.userInterfaceIdiom == .pad {
-                        moneyLabel.position = CGPoint(x: scene.frame.width / 2 - moneyLabel.frame.width / 2 - 10, y: (scene.frame.height + scene.frame.width) / 4 + scene.frame.height / 32)
-                    }
-                    else {
-                        moneyLabel.position = CGPoint(x: scene.frame.width / 2 - moneyLabel.frame.width / 2 - 10, y: (scene.frame.height + scene.frame.width) / 4 + scene.frame.height / 16)
-                    }
+                    updateMoneyLabel()
                 }
                 else {
                     notificationGenerator.notificationOccurred(.error)
                 }
             }
+            
+            if rewardedAdButton.contains(location) {
+                if GADRewardBasedVideoAd.sharedInstance().isReady == true {
+                    GADRewardBasedVideoAd.sharedInstance().present(fromRootViewController: self)
+                }
+                else {
+                    print("Ad wasn't ready")
+                }
+            }
         }
+    }
+    
+    func updateMoneyLabel() {
+        moneyLabel.text = "$\(UserDefaults.standard.integer(forKey: "money"))"
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            moneyLabel.position = CGPoint(x: scene.frame.width / 2 - moneyLabel.frame.width / 2 - 10, y: (scene.frame.height + scene.frame.width) / 4 + scene.frame.height / 32)
+        }
+        else {
+            moneyLabel.position = CGPoint(x: scene.frame.width / 2 - moneyLabel.frame.width / 2 - 10, y: (scene.frame.height + scene.frame.width) / 4 + scene.frame.height / 16)
+        }
+    }
+    
+    func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd, didRewardUserWith reward: GADAdReward) {
+        UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "money") + 20, forKey: "money")
+        updateMoneyLabel()
+    }
+    
+    func rewardBasedVideoAdDidClose(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
+        GADRewardBasedVideoAd.sharedInstance().load(GADRequest(), withAdUnitID: rewardedVideoID)
     }
     
     func getCost() -> Int {
