@@ -142,7 +142,7 @@ class ShopViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     }
     
     func getCost() -> Int {
-        return 1000
+        return 500
     }
     
     override var prefersStatusBarHidden: Bool {
