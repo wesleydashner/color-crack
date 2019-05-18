@@ -13,11 +13,11 @@ import GoogleMobileAds
 
 // Actual Ad ID: ca-app-pub-4988685536796370/1078330803
 // Test Ad ID: ca-app-pub-3940256099942544/1712485313
-let rewardedVideoID = "ca-app-pub-4988685536796370/1078330803"
+let rewardedVideoID = "ca-app-pub-3940256099942544/1712485313"
 
 // Actual Ad ID: ca-app-pub-4988685536796370/8629625562
 // Test Ad ID: ca-app-pub-3940256099942544/4411468910
-let interstitialAdID = "ca-app-pub-4988685536796370/8629625562"
+let interstitialAdID = "ca-app-pub-3940256099942544/4411468910"
 
 class ShopViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     
@@ -42,7 +42,7 @@ class ShopViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         view?.ignoresSiblingOrder = true
         
         moneyLabel.text = "$\(UserDefaults.standard.integer(forKey: "money"))"
-        moneyLabel.fontSize = 20
+        moneyLabel.fontSize = 25
         moneyLabel.fontColor = .yellow
         moneyLabel.fontName = "Nexa Bold"
         if UIDevice.current.userInterfaceIdiom == .pad {
@@ -63,7 +63,7 @@ class ShopViewController: UIViewController, GADRewardBasedVideoAdDelegate {
             backButton.position = CGPoint(x: -scene.frame.width / 2 + backButton.frame.width / 2 + 10, y: (scene.frame.height + scene.frame.width) / 4 + scene.frame.height / 32 + 12)
         }
         else {
-            backButton.position = CGPoint(x: -scene.frame.width / 2 + backButton.frame.width / 2 + 10, y: (scene.frame.height + scene.frame.width) / 4 + scene.frame.height / 16 + 6)
+            backButton.position = CGPoint(x: -scene.frame.width / 2 + backButton.frame.width / 2 + 10, y: (scene.frame.height + scene.frame.width) / 4 + scene.frame.height / 16 + 9)
         }
         scene.addChild(backButton)
         
@@ -86,7 +86,7 @@ class ShopViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         rewardedAdButton.fontSize = 25
         rewardedAdButton.fontColor = .yellow
         rewardedAdButton.fontName = "Nexa Bold"
-        rewardedAdButton.position = CGPoint(x: 0, y: -scene.frame.width + rewardedAdButton.frame.height)
+        rewardedAdButton.position = CGPoint(x: 0, y: -scene.frame.height / 2 + rewardedAdButton.frame.height)
         scene.addChild(rewardedAdButton)
     }
     

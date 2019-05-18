@@ -80,11 +80,11 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
         
         let money = UserDefaults.standard.integer(forKey: "money")
         moneyLabel.text = "$\(money)"
-        moneyLabel.fontSize = 20
+        moneyLabel.fontSize = 25
         moneyLabel.fontColor = .yellow
         moneyLabel.fontName = "Nexa Bold"
         if UIDevice.current.userInterfaceIdiom == .pad {
-            moneyLabel.fontSize *= 2
+            moneyLabel.fontSize = 40
             moneyLabel.position = CGPoint(x: scene.frame.width / 2 - moneyLabel.frame.width / 2 - 10, y: (scene.frame.height + scene.frame.width) / 4 + scene.frame.height / 32)
         }
         else {
@@ -97,7 +97,7 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
             storeButton.position = CGPoint(x: -scene.frame.width / 2 + storeButton.frame.width / 2 + 10, y: (scene.frame.height + scene.frame.width) / 4 + scene.frame.height / 32 + 12)
         }
         else {
-            storeButton.position = CGPoint(x: -scene.frame.width / 2 + storeButton.frame.width / 2 + 10, y: (scene.frame.height + scene.frame.width) / 4 + scene.frame.height / 16 + 6)
+            storeButton.position = CGPoint(x: -scene.frame.width / 2 + storeButton.frame.width / 2 + 10, y: (scene.frame.height + scene.frame.width) / 4 + scene.frame.height / 16 + 9)
         }
         scene.addChild(storeButton)
         
