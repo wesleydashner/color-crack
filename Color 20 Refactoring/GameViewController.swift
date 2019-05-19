@@ -187,34 +187,26 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
     }
     
     func getScoreLimit(dimension: Int) -> Int {
-        if dimension <= 10 {
+        switch dimension {
+        case 2...10:
             return dimension * 2
-        }
-        else if dimension <= 19 {
+        case 11...19:
             return dimension * 2 - 1
-        }
-        else if dimension <= 27 {
+        case 20...27:
             return dimension * 2 - 2
-        }
-        else if dimension <= 34 {
+        case 28...34:
             return dimension * 2 - 3
-        }
-        else if dimension <= 40 {
+        case 35...40:
             return dimension * 2 - 4
-        }
-        else if dimension <= 45 {
+        case 41...45:
             return dimension * 2 - 5
-        }
-        else if dimension <= 49 {
+        case 46...49:
             return dimension * 2 - 6
-        }
-        else if dimension <= 52 {
+        case 50...52:
             return dimension * 2 - 7
-        }
-        else if dimension <= 54 {
+        case 53...54:
             return dimension * 2 - 8
-        }
-        else {
+        default:
             return 100 + (dimension - 54)
         }
     }
