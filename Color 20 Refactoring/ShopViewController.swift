@@ -146,7 +146,16 @@ class ShopViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     }
     
     func getCost() -> Int {
-        return 1000
+        switch UserDefaults.standard.integer(forKey: "startLevel") {
+        case 2:
+            return 250
+        case 3:
+            return 500
+        case 4:
+            return 750
+        default:
+            return 1000
+        }
     }
     
     override var prefersStatusBarHidden: Bool {
