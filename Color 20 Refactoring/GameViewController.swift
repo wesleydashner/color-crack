@@ -118,6 +118,7 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
         bestLevelLabel.fontName = "Nexa Bold"
         scene.addChild(bestLevelLabel)
         
+        UserDefaults.standard.set(false, forKey: "hasCompletedTutorial")
         if !UserDefaults.standard.bool(forKey: "hasCompletedTutorial") {
             doTutorialItem(withIndex: 0)
         }
@@ -334,7 +335,7 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
         case 6:
             return (storeButton, "Visit the shop later to increase the level you start on.")
         case 7:
-            return (SKSpriteNode(), "Now get started!")
+            return (buttons.getTransparentSprite(), "Now get started by using these buttons.")
         default:
             return (SKSpriteNode(), "ERROR: default reached in getSpriteAndText switch statement.")
         }
