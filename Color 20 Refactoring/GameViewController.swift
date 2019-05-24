@@ -118,6 +118,7 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
         bestLevelLabel.fontName = "Nexa Bold"
         scene.addChild(bestLevelLabel)
         
+//        UserDefaults.standard.set(false, forKey: "hasCompletedTutorial")
         if !UserDefaults.standard.bool(forKey: "hasCompletedTutorial") {
             doTutorialItem(withIndex: 0)
         }
@@ -149,17 +150,22 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
                     if buttons.getButton(ofColor: color).sprite.contains(location) {
                         // if user wins this level
                         if board.isFilled() {
-                            impactGenerator.impactOccurred()
-                            updateMoneyValueAndLabel(value: UserDefaults.standard.integer(forKey: "money") + boardDimension)
-                            if boardDimension >= 9 && boardDimension % 3 == 0 {
-                                showAd()
+                            if !UserDefaults.standard.bool(forKey: "hasCompletedTutorial") {
+                                doTutorialItem(withIndex: 8)
                             }
-                            boardDimension += 1
-                            scoreLimit = getScoreLimit(dimension: boardDimension)
-                            resetBoard(dimension: boardDimension, topRightColor: color)
-                            board.animateCapturedTiles()
-                            setScoreAndLabel(score: 0)
-                            updateLevelAndBest(newDimension: boardDimension)
+                            else {
+                                impactGenerator.impactOccurred()
+                                updateMoneyValueAndLabel(value: UserDefaults.standard.integer(forKey: "money") + boardDimension)
+                                if boardDimension >= 9 && boardDimension % 3 == 0 {
+                                    showAd()
+                                }
+                                boardDimension += 1
+                                scoreLimit = getScoreLimit(dimension: boardDimension)
+                                resetBoard(dimension: boardDimension, topRightColor: color)
+                                board.animateCapturedTiles()
+                                setScoreAndLabel(score: 0)
+                                updateLevelAndBest(newDimension: boardDimension)
+                            }
                         }
                         // if user loses this level
                         else if score == scoreLimit {
@@ -275,29 +281,45 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
         crop = SKCropNode()
         
         let fullScreen = SKSpriteNode(color: .black, size: scene.frame.size)
-        fullScreen.position = CGPoint.zero
-        fullScreen.alpha = 0.7
+        fullScreen.alpha = 0.9
         
-        let mask = SKSpriteNode(color: .white, size: scene.frame.size)
-        mask.position = CGPoint.zero
-        
-        let highlightedArea = SKShapeNode(rectOf: CGSize(width: sprite.frame.width * 1.1, height: sprite.frame.height * 1.1), cornerRadius: 10)
+        let highlightedArea = SKShapeNode(rectOf: CGSize(width: sprite.frame.width * 1.1, height: sprite.frame.height * 1.2), cornerRadius: 10)
         highlightedArea.fillColor = .white
+        highlightedArea.alpha = 0.01
         highlightedArea.lineWidth = 0
         highlightedArea.position = CGPoint(x: sprite.position.x, y: sprite.position.y + sprite.frame.height / 2 - 1)
         
         if sprite == storeButton {
             highlightedArea.position.y -= storeButton.frame.height / 2
         }
+        else if sprite == scoreLabel || sprite == moneyLabel {
+            highlightedArea.position.y -= sprite.frame.height / 8
+        }
         
-        highlightedArea.blendMode = .subtract
-        mask.addChild(highlightedArea)
+        highlightedArea.blendMode = .replace
+        fullScreen.addChild(highlightedArea)
         
-        crop.maskNode = mask
+        let mask = generateMaskNode(from: fullScreen)
+        
         crop.addChild(fullScreen)
+        crop.maskNode = mask
         
         crop.zPosition = 2
         scene.addChild(crop)
+    }
+    
+    // https://stackoverflow.com/questions/47759584/swift-spritekit-inverse-masking-doesnt-work-on-device-but-works-in-simulator
+    func generateMaskNode(from mask:SKNode) -> SKNode {
+        var returningNode : SKNode!
+        autoreleasepool {
+                let view = SKView()
+                let texture = view.texture(from: mask)
+                let node = SKSpriteNode(texture:texture)
+                let texture2 = view.texture(from: node)
+                returningNode = SKSpriteNode(texture:texture2)
+                
+        }
+        return returningNode
     }
     
     func addTutorialText(text: String) {
@@ -320,21 +342,21 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
     func getSpriteAndText(index: Int) -> (SKNode, String) {
         switch index {
         case 0:
-            return (SKSpriteNode(), "Welcome to Color Crash. Tap to continue.")
+            return (SKSpriteNode(), "Welcome to Color Crash. Tap to learn to play in 7 steps.")
         case 1:
-            return (buttons.getTransparentSprite(), "Use these buttons to fill the board.")
+            return (buttons.getTransparentSprite(), "(1/7)\nUse these buttons to fill the board.")
         case 2:
-            return (scoreLabel, "This shows you how many moves you have left to complete the board.")
+            return (scoreLabel, "(2/7)\nThis shows you how many moves you have left to complete the board.")
         case 3:
-            return (currentLevelLabel, "This is what level you're currently on.")
+            return (currentLevelLabel, "(3/7)\nThis is what level you're currently on.")
         case 4:
-            return (bestLevelLabel, "This is your high score.")
+            return (bestLevelLabel, "(4/7)\nThis is your high score.")
         case 5:
-            return (moneyLabel, "This is how much money you've earned.")
+            return (moneyLabel, "(5/7)\nThis is how much money you've earned.")
         case 6:
-            return (storeButton, "Visit the shop later to increase the level you start on.")
+            return (storeButton, "(6/7)\nYou can use that money in the shop to increase the level you start on.")
         case 7:
-            return (buttons.getTransparentSprite(), "Now get started by using these buttons.")
+            return (buttons.getTransparentSprite(), "(7/7)\nWhen you complete a level, tap any button to continue to the next level.")
         default:
             return (SKSpriteNode(), "ERROR: default reached in getSpriteAndText switch statement.")
         }
