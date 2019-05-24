@@ -13,10 +13,12 @@ import GoogleMobileAds
 
 // Actual Ad ID: ca-app-pub-4988685536796370/1078330803
 // Test Ad ID: ca-app-pub-3940256099942544/1712485313
+//let rewardedVideoID = "ca-app-pub-4988685536796370/1078330803"
 let rewardedVideoID = "ca-app-pub-3940256099942544/1712485313"
 
 // Actual Ad ID: ca-app-pub-4988685536796370/8629625562
 // Test Ad ID: ca-app-pub-3940256099942544/4411468910
+//let interstitialAdID = "ca-app-pub-4988685536796370/8629625562"
 let interstitialAdID = "ca-app-pub-3940256099942544/4411468910"
 
 class ShopViewController: UIViewController, GADRewardBasedVideoAdDelegate {
@@ -86,8 +88,19 @@ class ShopViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         rewardedAdButton.fontSize = 25
         rewardedAdButton.fontColor = .yellow
         rewardedAdButton.fontName = "Nexa Bold"
-        rewardedAdButton.position = CGPoint(x: 0, y: -scene.frame.height / 2 + rewardedAdButton.frame.height)
+        rewardedAdButton.position = CGPoint(x: 0, y: -scene.frame.height / 2 + rewardedAdButton.frame.height * 4)
         scene.addChild(rewardedAdButton)
+        
+        func updateRewardedAdButton() {
+            if GADRewardBasedVideoAd.sharedInstance().isReady == true {
+                rewardedAdButton.fontColor = .yellow
+            }
+            else {
+                rewardedAdButton.fontColor = UIColor(red: 0.3, green: 0.3, blue: 0.0, alpha: 1.0)
+            }
+        }
+        let updateButtonColorForever = SKAction.repeatForever(.sequence([SKAction.run(updateRewardedAdButton), SKAction.wait(forDuration: 0.2)]))
+        scene.run(updateButtonColorForever)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -117,6 +130,7 @@ class ShopViewController: UIViewController, GADRewardBasedVideoAdDelegate {
             
             if rewardedAdButton.contains(location) {
                 if GADRewardBasedVideoAd.sharedInstance().isReady == true {
+                    impactGenerator.impactOccurred()
                     GADRewardBasedVideoAd.sharedInstance().present(fromRootViewController: self)
                 }
                 else {
