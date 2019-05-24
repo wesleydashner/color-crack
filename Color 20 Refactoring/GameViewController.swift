@@ -29,6 +29,9 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
     let moneyLabel = SKLabelNode()
     let storeButton = SKSpriteNode(imageNamed: "store")
     var interstitial: GADInterstitial!
+    var crop = SKCropNode()
+    let tutorialText = SKLabelNode()
+    var tutorialIndex = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,52 +117,70 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
         bestLevelLabel.position = CGPoint(x: scene.frame.width / 4, y: scene.frame.width / 2 + bestLevelLabel.fontSize / 2 + 10)
         bestLevelLabel.fontName = "Nexa Bold"
         scene.addChild(bestLevelLabel)
+        
+        if !UserDefaults.standard.bool(forKey: "hasCompletedTutorial") {
+            doTutorialItem(withIndex: 0)
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
-            let location = t.location(in: scene)
-            
-            if storeButton.contains(location) {
+            if !UserDefaults.standard.bool(forKey: "hasCompletedTutorial") {
                 impactGenerator.impactOccurred()
-                self.performSegue(withIdentifier: "toShop", sender: self)
+                removeHighlightAndLabel()
+                tutorialIndex += 1
+                if tutorialIndex != 8 {
+                    doTutorialItem(withIndex: tutorialIndex)
+                }
+                else {
+                    UserDefaults.standard.set(true, forKey: "hasCompletedTutorial")
+                }
             }
             
-            for color: UIColor in colors {
-                if buttons.getButton(ofColor: color).sprite.contains(location) {
-                    // if user wins this level
-                    if board.isFilled() {
-                        impactGenerator.impactOccurred()
-                        updateMoneyValueAndLabel(value: UserDefaults.standard.integer(forKey: "money") + boardDimension)
-                        if boardDimension >= 9 && boardDimension % 3 == 0 {
-                            showAd()
+            else {
+                let location = t.location(in: scene)
+                
+                if storeButton.contains(location) {
+                    impactGenerator.impactOccurred()
+                    self.performSegue(withIdentifier: "toShop", sender: self)
+                }
+                
+                for color: UIColor in colors {
+                    if buttons.getButton(ofColor: color).sprite.contains(location) {
+                        // if user wins this level
+                        if board.isFilled() {
+                            impactGenerator.impactOccurred()
+                            updateMoneyValueAndLabel(value: UserDefaults.standard.integer(forKey: "money") + boardDimension)
+                            if boardDimension >= 9 && boardDimension % 3 == 0 {
+                                showAd()
+                            }
+                            boardDimension += 1
+                            scoreLimit = getScoreLimit(dimension: boardDimension)
+                            resetBoard(dimension: boardDimension, topRightColor: color)
+                            board.animateCapturedTiles()
+                            setScoreAndLabel(score: 0)
+                            updateLevelAndBest(newDimension: boardDimension)
                         }
-                        boardDimension += 1
-                        scoreLimit = getScoreLimit(dimension: boardDimension)
-                        resetBoard(dimension: boardDimension, topRightColor: color)
-                        board.animateCapturedTiles()
-                        setScoreAndLabel(score: 0)
-                        updateLevelAndBest(newDimension: boardDimension)
+                        // if user loses this level
+                        else if score == scoreLimit {
+                            impactGenerator.impactOccurred()
+                            boardDimension = UserDefaults.standard.integer(forKey: "startLevel")
+                            scoreLimit = getScoreLimit(dimension: boardDimension)
+                            resetBoard(dimension: boardDimension, topRightColor: color)
+                            board.animateCapturedTiles()
+                            setScoreAndLabel(score: 0)
+                            updateLevelAndBest(newDimension: boardDimension)
+                        }
+                        // else it's just a regular move (make sure it's not the current color)
+                        else if color != board.tiles[0][0].sprite.color {
+                            impactGenerator.impactOccurred()
+                            buttons.getButton(ofColor: color).buttonTapped(board: board)
+                            board.animateCapturedTiles()
+                            setScoreAndLabel(score: score + 1)
+                        }
+                        UserDefaults.standard.set(score, forKey: "currentScore")
+                        saveBoard(board: board)
                     }
-                    // if user loses this level
-                    else if score == scoreLimit {
-                        impactGenerator.impactOccurred()
-                        boardDimension = UserDefaults.standard.integer(forKey: "startLevel")
-                        scoreLimit = getScoreLimit(dimension: boardDimension)
-                        resetBoard(dimension: boardDimension, topRightColor: color)
-                        board.animateCapturedTiles()
-                        setScoreAndLabel(score: 0)
-                        updateLevelAndBest(newDimension: boardDimension)
-                    }
-                    // else it's just a regular move (make sure it's not the current color)
-                    else if color != board.tiles[0][0].sprite.color {
-                        impactGenerator.impactOccurred()
-                        buttons.getButton(ofColor: color).buttonTapped(board: board)
-                        board.animateCapturedTiles()
-                        setScoreAndLabel(score: score + 1)
-                    }
-                    UserDefaults.standard.set(score, forKey: "currentScore")
-                    saveBoard(board: board)
                 }
             }
         }
@@ -248,6 +269,81 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
         else {
             print("Ad wasn't ready")
         }
+    }
+    
+    func highlightSprite(sprite: SKNode) {
+        crop = SKCropNode()
+        
+        let fullScreen = SKSpriteNode(color: .black, size: scene.frame.size)
+        fullScreen.position = CGPoint.zero
+        fullScreen.alpha = 0.7
+        
+        let mask = SKSpriteNode(color: .white, size: scene.frame.size)
+        mask.position = CGPoint.zero
+        
+        let highlightedArea = SKShapeNode(rectOf: CGSize(width: sprite.frame.width * 1.1, height: sprite.frame.height * 1.1), cornerRadius: 10)
+        highlightedArea.fillColor = .white
+        highlightedArea.lineWidth = 0
+        highlightedArea.position = CGPoint(x: sprite.position.x, y: sprite.position.y + sprite.frame.height / 2 - 1)
+        
+        if sprite == storeButton {
+            highlightedArea.position.y -= storeButton.frame.height / 2
+        }
+        
+        highlightedArea.blendMode = .subtract
+        mask.addChild(highlightedArea)
+        
+        crop.maskNode = mask
+        crop.addChild(fullScreen)
+        
+        crop.zPosition = 2
+        scene.addChild(crop)
+    }
+    
+    func addTutorialText(text: String) {
+        tutorialText.fontName = "Nexa Bold"
+        tutorialText.fontSize = 28
+        tutorialText.numberOfLines = 0
+        tutorialText.preferredMaxLayoutWidth = scene.frame.width * 0.9
+        tutorialText.text = text
+        tutorialText.zPosition = 3
+        tutorialText.horizontalAlignmentMode = .center
+        tutorialText.position = CGPoint(x: 0, y: 0 - tutorialText.frame.height / 2)
+        scene.addChild(tutorialText)
+    }
+    
+    func removeHighlightAndLabel() {
+        crop.removeFromParent()
+        tutorialText.removeFromParent()
+    }
+    
+    func getSpriteAndText(index: Int) -> (SKNode, String) {
+        switch index {
+        case 0:
+            return (SKSpriteNode(), "Welcome to Color Crash. Tap to continue.")
+        case 1:
+            return (buttons.getTransparentSprite(), "Use these buttons to fill the board.")
+        case 2:
+            return (scoreLabel, "This shows you how many moves you have left to complete the board.")
+        case 3:
+            return (currentLevelLabel, "This is what level you're currently on.")
+        case 4:
+            return (bestLevelLabel, "This is your high score.")
+        case 5:
+            return (moneyLabel, "This is how much money you've earned.")
+        case 6:
+            return (storeButton, "Visit the shop later to increase the level you start on.")
+        case 7:
+            return (SKSpriteNode(), "Now get started!")
+        default:
+            return (SKSpriteNode(), "ERROR: default reached in getSpriteAndText switch statement.")
+        }
+    }
+    
+    func doTutorialItem(withIndex index: Int) {
+        let (sprite, text) = getSpriteAndText(index: index)
+        highlightSprite(sprite: sprite)
+        addTutorialText(text: text)
     }
     
     override var prefersStatusBarHidden: Bool {

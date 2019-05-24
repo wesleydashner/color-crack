@@ -35,4 +35,13 @@ class Buttons {
         print("ERROR: returning black button because button of given color was not found")
         return Button(color: .black)
     }
+    
+    func getTransparentSprite() -> SKSpriteNode {
+        let sprite = SKSpriteNode()
+        sprite.color = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+        sprite.position.x = 0
+        sprite.position.y = buttons[0].sprite.position.y - buttons[0].sprite.frame.height / 2
+        sprite.size = CGSize(width: (-buttons[0].sprite.position.x + buttons[0].sprite.frame.width / 2) * 2, height: buttons[0].sprite.frame.height)
+        return sprite
+    }
 }
