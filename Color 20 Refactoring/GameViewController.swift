@@ -118,7 +118,6 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
         bestLevelLabel.fontName = "Nexa Bold"
         scene.addChild(bestLevelLabel)
         
-        UserDefaults.standard.set(false, forKey: "hasCompletedTutorial")
         if !UserDefaults.standard.bool(forKey: "hasCompletedTutorial") {
             doTutorialItem(withIndex: 0)
         }
