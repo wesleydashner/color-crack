@@ -17,6 +17,7 @@ let impactGenerator = UIImpactFeedbackGenerator(style: .light)
 class GameViewController: UIViewController, GADInterstitialDelegate {
     
     let scene = SKScene(size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+    // change boardDimension to set start level for testing (make sure to delete app before running again)
     var boardDimension = 2
     var bestDimension = 2
     var scoreLimit = 3
@@ -215,26 +216,30 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
     
     func getScoreLimit(dimension: Int) -> Int {
         switch dimension {
-        case 2...9:
+        case 2...7:
             return dimension * 2
-        case 10...13:
+        case 8...12:
             return dimension * 2 - 1
-        case 14...15:
+        case 13...16:
             return dimension * 2 - 2
-        case 16:
-            return 29
-        case 17:
-            return 30
-        case 18...19:
-            return 31
-        case 20...23:
-            return 32
-        case 24...31:
-            return 33
-        case 32...47:
-            return 34
+        case 17...19:
+            return dimension * 2 - 3
+        case 20...21:
+            return dimension * 2 - 4
+        case 22:
+            return 39
+        case 23...24:
+            return 40
+        case 25...27:
+            return 41
+        case 28...31:
+            return 42
+        case 32...36:
+            return 43
+        case 37...42:
+            return 44
         default:
-            return 35
+            return 45
         }
     }
     

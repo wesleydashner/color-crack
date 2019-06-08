@@ -129,19 +129,21 @@ class Board: NSObject, NSCoding {
     }
     
     func animateCapturedTiles() {
-        var capturedTiles: [Tile] = []
-        for y in 0...(tiles.count - 1) {
-            for x in 0...(tiles[y].count - 1) {
-                tiles[y][x].sprite.zPosition = 0
-                if tiles[y][x].captured == true {
-                    capturedTiles.append(tiles[y][x])
-                    tiles[y][x].sprite.zPosition = 1
+        if tiles.count <= 20 {
+            var capturedTiles: [Tile] = []
+            for y in 0...(tiles.count - 1) {
+                for x in 0...(tiles[y].count - 1) {
+                    tiles[y][x].sprite.zPosition = 0
+                    if tiles[y][x].captured == true {
+                        capturedTiles.append(tiles[y][x])
+                        tiles[y][x].sprite.zPosition = 1
+                    }
                 }
             }
-        }
-        let constant: CGFloat = CGFloat(Double((tiles.count + 2) / 4) * 0.1) + 1
-        for tile in capturedTiles {
-            tile.sprite.run(.sequence([.scale(to: constant, duration: 0.1), .scale(to: 1, duration: 0.1)]))
+            let constant: CGFloat = CGFloat(Double((tiles.count + 2) / 4) * 0.1) + 1
+            for tile in capturedTiles {
+                tile.sprite.run(.sequence([.scale(to: constant, duration: 0.1), .scale(to: 1, duration: 0.1)]))
+            }
         }
     }
     
