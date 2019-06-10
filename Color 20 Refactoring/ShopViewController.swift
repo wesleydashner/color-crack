@@ -13,13 +13,13 @@ import GoogleMobileAds
 
 // Actual Ad ID: ca-app-pub-4988685536796370/1078330803
 // Test Ad ID: ca-app-pub-3940256099942544/1712485313
-//let rewardedVideoID = "ca-app-pub-4988685536796370/1078330803"
-let rewardedVideoID = "ca-app-pub-3940256099942544/1712485313"
+let rewardedVideoID = "ca-app-pub-4988685536796370/1078330803"
+//let rewardedVideoID = "ca-app-pub-3940256099942544/1712485313"
 
 // Actual Ad ID: ca-app-pub-4988685536796370/8629625562
 // Test Ad ID: ca-app-pub-3940256099942544/4411468910
-//let interstitialAdID = "ca-app-pub-4988685536796370/8629625562"
-let interstitialAdID = "ca-app-pub-3940256099942544/4411468910"
+let interstitialAdID = "ca-app-pub-4988685536796370/8629625562"
+//let interstitialAdID = "ca-app-pub-3940256099942544/4411468910"
 
 class ShopViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     
