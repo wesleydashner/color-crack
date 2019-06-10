@@ -17,7 +17,6 @@ let impactGenerator = UIImpactFeedbackGenerator(style: .light)
 class GameViewController: UIViewController, GADInterstitialDelegate {
     
     let scene = SKScene(size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-    // change boardDimension to set start level for testing (make sure to delete app before running again)
     var boardDimension = 2
     var bestDimension = 2
     var scoreLimit = 3
@@ -50,10 +49,6 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
         if UserDefaults.standard.integer(forKey: "startLevel") == 0 {
             UserDefaults.standard.set(2, forKey: "startLevel")
         }
-        
-//        UserDefaults.standard.set(2, forKey: "startLevel")
-//        UserDefaults.standard.set(2, forKey: "best")
-//        UserDefaults.standard.set(0, forKey: "money")
         
         if UserDefaults.standard.integer(forKey: "startLevel") > boardDimension {
             board = Board(x: UserDefaults.standard.integer(forKey: "startLevel"), y: UserDefaults.standard.integer(forKey: "startLevel"))
@@ -216,30 +211,20 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
     
     func getScoreLimit(dimension: Int) -> Int {
         switch dimension {
-        case 2...7:
+        case 2...10:
             return dimension * 2
-        case 8...12:
+        case 11...12:
             return dimension * 2 - 1
-        case 13...16:
+        case 13...14:
             return dimension * 2 - 2
-        case 17...19:
+        case 15...16:
             return dimension * 2 - 3
-        case 20...21:
+        case 16...17:
             return dimension * 2 - 4
-        case 22:
-            return 39
-        case 23...24:
-            return 40
-        case 25...27:
-            return 41
-        case 28...31:
-            return 42
-        case 32...36:
-            return 43
-        case 37...42:
-            return 44
+        case 18...19:
+            return dimension * 2 - 5
         default:
-            return 45
+            return 14 + dimension
         }
     }
     
