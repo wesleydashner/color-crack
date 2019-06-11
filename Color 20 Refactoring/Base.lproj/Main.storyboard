@@ -39,11 +39,33 @@
                     </view>
                     <connections>
                         <segue destination="BV1-FR-VrT" kind="show" identifier="toMain" id="meC-7m-rb4"/>
+                        <segue destination="byq-Kx-OoL" kind="show" identifier="toCredits" id="y4b-ZB-VF4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MwJ-Sa-iJF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="991" y="21"/>
         </scene>
+        <!--Credits View Controller-->
+        <scene sceneID="aCV-Ou-Q9u">
+            <objects>
+                <viewController id="byq-Kx-OoL" customClass="CreditsViewController" customModule="Color_20_Refactoring" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Kp1-wR-MF5" customClass="SKView">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="ocM-GU-fL8"/>
+                    </view>
+                    <connections>
+                        <segue destination="05K-zQ-xOk" kind="show" identifier="toShop" id="bJi-3F-E83"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rWn-Mc-Iqf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1970" y="21"/>
+        </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="bJi-3F-E83"/>
+    </inferredMetricsTieBreakers>
 </document>

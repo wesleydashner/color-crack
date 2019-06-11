@@ -15,6 +15,7 @@
 		3E7078A7227E2281003D2DAA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E7078A6227E2281003D2DAA /* Assets.xcassets */; };
 		3E7078AA227E2281003D2DAA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E7078A8227E2281003D2DAA /* LaunchScreen.storyboard */; };
 		3E7078B2227EBE65003D2DAA /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7078B1227EBE65003D2DAA /* Board.swift */; };
+		3E7ABA5A22AF5EDA006F5093 /* CreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7ABA5922AF5EDA006F5093 /* CreditsViewController.swift */; };
 		3ECBAF4D228213D300A77E77 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECBAF4C228213D300A77E77 /* Button.swift */; };
 		3ECBAF4F228213ED00A77E77 /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECBAF4E228213ED00A77E77 /* Tile.swift */; };
 		3ECBAF512282147C00A77E77 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECBAF502282147C00A77E77 /* Buttons.swift */; };
@@ -35,6 +36,7 @@
 		3E7078A9227E2281003D2DAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3E7078AB227E2281003D2DAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E7078B1227EBE65003D2DAA /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		3E7ABA5922AF5EDA006F5093 /* CreditsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditsViewController.swift; sourceTree = "<group>"; };
 		3ECBAF4C228213D300A77E77 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		3ECBAF4E228213ED00A77E77 /* Tile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
 		3ECBAF502282147C00A77E77 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 				3ECBAF4C228213D300A77E77 /* Button.swift */,
 				3ECBAF502282147C00A77E77 /* Buttons.swift */,
 				3EE2F7072285F34B00DB8464 /* ShopViewController.swift */,
+				3E7ABA5922AF5EDA006F5093 /* CreditsViewController.swift */,
 				3E7078A3227E227F003D2DAA /* Main.storyboard */,
 				3E7078A6227E2281003D2DAA /* Assets.xcassets */,
 				3E7078A8227E2281003D2DAA /* LaunchScreen.storyboard */,
@@ -244,6 +247,7 @@
 				3E7078A2227E227F003D2DAA /* GameViewController.swift in Sources */,
 				3E7078B2227EBE65003D2DAA /* Board.swift in Sources */,
 				3ECBAF4F228213ED00A77E77 /* Tile.swift in Sources */,
+				3E7ABA5A22AF5EDA006F5093 /* CreditsViewController.swift in Sources */,
 				3ECBAF512282147C00A77E77 /* Buttons.swift in Sources */,
 				3E70789A227E227F003D2DAA /* AppDelegate.swift in Sources */,
 				3EE2F7082285F34B00DB8464 /* ShopViewController.swift in Sources */,

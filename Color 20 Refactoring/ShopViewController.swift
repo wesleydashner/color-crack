@@ -19,7 +19,9 @@ let rewardedVideoID = "ca-app-pub-4988685536796370/1078330803"
 // Actual Ad ID: ca-app-pub-4988685536796370/8629625562
 // Test Ad ID: ca-app-pub-3940256099942544/4411468910
 let interstitialAdID = "ca-app-pub-4988685536796370/8629625562"
-//let interstitialAdID = "ca-app-pub-3940256099942544/4411468910"
+//let interstitialAdID = "ca-app-pub-3940256099942544/4411468910"\
+
+var moneyLabelHeight: CGFloat = -1
 
 class ShopViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     
@@ -31,6 +33,8 @@ class ShopViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     let upgradeCostLabel = SKLabelNode()
     let rewardedAdButton = SKLabelNode()
     let notificationGenerator = UINotificationFeedbackGenerator()
+    var moneyLabelTouched = false
+    var secondsTouched = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +59,7 @@ class ShopViewController: UIViewController, GADRewardBasedVideoAdDelegate {
             moneyLabel.position = CGPoint(x: scene.frame.width / 2 - moneyLabel.frame.width / 2 - 10, y: (scene.frame.height + scene.frame.width) / 4 + scene.frame.height / 16)
         }
         scene.addChild(moneyLabel)
+        moneyLabelHeight = moneyLabel.frame.height
         
         upgradeButton.position = CGPoint(x: 0, y: 0)
         upgradeButton.size = CGSize(width: scene.frame.width / 2, height: scene.frame.width / 2)
@@ -101,11 +106,26 @@ class ShopViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         }
         let updateButtonColorForever = SKAction.repeatForever(.sequence([SKAction.run(updateRewardedAdButton), SKAction.wait(forDuration: 0.2)]))
         scene.run(updateButtonColorForever)
+        
+        func testForSegueToCredits() {
+            if moneyLabelTouched {
+                secondsTouched += 1
+            }
+            if secondsTouched == 5 {
+                self.performSegue(withIdentifier: "toCredits", sender: self)
+            }
+        }
+        let testForSegueToCreditsForever = SKAction.repeatForever(.sequence([SKAction.run(testForSegueToCredits), SKAction.wait(forDuration: 1)]))
+        scene.run(testForSegueToCreditsForever)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
             let location = t.location(in: scene)
+            
+            if moneyLabel.contains(location) {
+                moneyLabelTouched = true
+            }
             
             if backButton.contains(location) {
                 impactGenerator.impactOccurred()
@@ -137,6 +157,13 @@ class ShopViewController: UIViewController, GADRewardBasedVideoAdDelegate {
                     print("Ad wasn't ready")
                 }
             }
+        }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for _ in touches {
+            moneyLabelTouched = false
+            secondsTouched = 0
         }
     }
     
