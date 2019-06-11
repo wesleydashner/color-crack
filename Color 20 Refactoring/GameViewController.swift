@@ -262,9 +262,6 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
         if interstitial.isReady {
             interstitial.present(fromRootViewController: self)
         }
-        else {
-            print("Ad wasn't ready")
-        }
     }
     
     func highlightSprite(sprite: SKNode) {

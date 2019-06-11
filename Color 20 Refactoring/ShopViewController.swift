@@ -153,9 +153,6 @@ class ShopViewController: UIViewController, GADRewardBasedVideoAdDelegate {
                     impactGenerator.impactOccurred()
                     GADRewardBasedVideoAd.sharedInstance().present(fromRootViewController: self)
                 }
-                else {
-                    print("Ad wasn't ready")
-                }
             }
         }
     }
