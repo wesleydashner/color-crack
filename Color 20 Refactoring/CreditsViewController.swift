@@ -48,6 +48,7 @@ class CreditsViewController: UIViewController {
             let location = t.location(in: scene)
             
             if backButton.contains(location) {
+                impactGenerator.impactOccurred()
                 self.performSegue(withIdentifier: "toShop", sender: self)
             }
         }

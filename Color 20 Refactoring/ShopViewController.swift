@@ -112,6 +112,7 @@ class ShopViewController: UIViewController, GADRewardBasedVideoAdDelegate {
                 secondsTouched += 1
             }
             if secondsTouched == 5 {
+                notificationGenerator.notificationOccurred(.success)
                 self.performSegue(withIdentifier: "toCredits", sender: self)
             }
         }
