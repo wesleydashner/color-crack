@@ -54,4 +54,7 @@ class CreditsViewController: UIViewController {
         }
     }
     
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
 }
