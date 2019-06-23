@@ -329,7 +329,7 @@ class GameViewController: UIViewController, GADInterstitialDelegate {
     func getSpriteAndText(index: Int) -> (SKNode, String) {
         switch index {
         case 0:
-            return (SKSpriteNode(), "Welcome to Color Crash. Tap to learn to play in 7 steps.")
+            return (SKSpriteNode(), "Welcome to Color Crack. Tap to learn to play in 7 steps.")
         case 1:
             return (buttons.getTransparentSprite(), "(1/7)\nUse these buttons to fill the board.")
         case 2:
